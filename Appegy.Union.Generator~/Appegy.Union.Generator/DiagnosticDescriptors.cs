@@ -8,7 +8,7 @@ public static class DiagnosticDescriptors
 
     public static DiagnosticDescriptor NotStruct { get; } = new(
         id: "UNION001",
-        title: "Type has no be struct",
+        title: "Type has to be struct",
         messageFormat: "The type '{0}' must be a struct to use [Union].",
         category: Category,
         defaultSeverity: DiagnosticSeverity.Error,
