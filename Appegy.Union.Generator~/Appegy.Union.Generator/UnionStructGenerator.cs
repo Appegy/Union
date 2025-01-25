@@ -173,16 +173,19 @@ public class UnionStructGenerator : IIncrementalGenerator
 
         if (interfaces is { Count: > 0 })
         {
-            codeWriter.Write(" : ");
+            codeWriter.WriteLine(" :");
+            codeWriter.Indent++;
             for (var i = 0; i < interfaces.Count; i++)
             {
                 var @interface = interfaces[i];
+                codeWriter.Write("global::");
                 codeWriter.Write(@interface.ToDisplayString());
-                if (i < interfaces.Count - 1)
+                if (i != interfaces.Count - 1)
                 {
-                    codeWriter.Write(", ");
+                    codeWriter.WriteLine(",");
                 }
             }
+            codeWriter.Indent--;
         }
 
         codeWriter.WriteLine();
