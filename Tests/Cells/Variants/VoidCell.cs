@@ -1,4 +1,4 @@
-﻿namespace Appegy.Union.Sample.Cells
+﻿namespace Appegy.Union.Cells
 {
     public struct VoidCell : IPuzzleCell, IMovableCell, IMatchableCell
     {
