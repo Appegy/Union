@@ -1,0 +1,18 @@
+{
+  "name": "com.appegy.union",
+  "displayName": "Appegy: Union",
+  "description": "Struct union for Unity.",
+  "version": "1.0.0",
+  "unity": "2021.3",
+  "documentationUrl": "https://github.com/Appegy/Union",
+  "changelogUrl": "https://github.com/Appegy/Union/releases",
+  "license": "MIT",
+  "keywords": [
+    "Union"
+  ],
+  "author": {
+    "name": "Appegy",
+    "email" : "imurashka.me@gmail.com",
+    "url": "https://github.com/Appegy"
+  }
+}

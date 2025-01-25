@@ -1,0 +1,25 @@
+name: Build Sample Application
+
+on: [pull_request, workflow_dispatch]
+
+jobs:
+  test:
+    name: Run Unit Tests
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    steps:      
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Run unit tests
+        uses: game-ci/unity-test-runner@v4
+        id: tests
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+        with:
+          projectPath: ".Union"
+          unityVersion: "auto"
+          testMode: "EditMode"
