@@ -8,15 +8,14 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Text;
+using static Appegy.Union.Generator.AttributesNames;
 using static Appegy.Union.Generator.DiagnosticDescriptors;
 
 namespace Appegy.Union.Generator;
 
-[Generator]
+// [Generator]
 public class UnionStructGenerator : IIncrementalGenerator
 {
-    private const string UnionAttributeName = "Appegy.Union.UnionAttribute";
-    private const string ExposeAttributeName = "Appegy.Union.ExposeAttribute";
 
     private readonly struct StructDeclarationContext(
         StructDeclarationSyntax syntax,
