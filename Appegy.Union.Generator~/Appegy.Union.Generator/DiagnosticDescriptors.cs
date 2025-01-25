@@ -61,4 +61,28 @@ public static class DiagnosticDescriptors
         category: Category,
         defaultSeverity: DiagnosticSeverity.Error,
         isEnabledByDefault: true);
+
+    public static DiagnosticDescriptor ExposeRequiresUnion { get; } = new(
+        id: "UNION008",
+        title: "ExposeAttribute requires UnionAttribute",
+        messageFormat: "The [Expose] attribute must be used together with [Union] attribute.",
+        category: Category,
+        defaultSeverity: DiagnosticSeverity.Error,
+        isEnabledByDefault: true);
+
+    public static DiagnosticDescriptor NoInterfacesProvided { get; } = new(
+        id: "UNION009",
+        title: "No interfaces provided in [Expose] attribute",
+        messageFormat: "The [Expose] attribute must specify at least one interface.",
+        category: Category,
+        defaultSeverity: DiagnosticSeverity.Error,
+        isEnabledByDefault: true);
+
+    public static DiagnosticDescriptor DuplicateUnionType { get; } = new(
+        id: "UNION010",
+        title: "Duplicate type in [Union] attribute",
+        messageFormat: "The type '{0}' is specified more than once in [Union].",
+        category: Category,
+        defaultSeverity: DiagnosticSeverity.Error,
+        isEnabledByDefault: true);
 }
