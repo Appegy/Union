@@ -32,8 +32,6 @@ public class ExposeAttributeAnalyzer : DiagnosticAnalyzer
     private void AnalyzeAttribute(SyntaxNodeAnalysisContext context)
     {
         var attributeSyntax = (AttributeSyntax)context.Node;
-
-        // Check if this is ExposeAttribute
         var attributeSymbol = context.SemanticModel.GetSymbolInfo(attributeSyntax).Symbol as IMethodSymbol;
         if (attributeSymbol?.ContainingType?.ToDisplayString() != ExposeAttributeName)
         {
@@ -44,7 +42,7 @@ public class ExposeAttributeAnalyzer : DiagnosticAnalyzer
         VerifyArgumentsExistence(context, attributeSyntax);
         VerifyAllTypesAreInterfaces(context, attributeSyntax);
         VerifyNoDuplicate(context, attributeSyntax);
-        VerifyUnionTypesImplementExposedInterfaces(context, attributeSyntax);
+        VerifyUnionTypesExposes(context, attributeSyntax);
     }
 
     private void VerifyUnionAttribute(SyntaxNodeAnalysisContext context, AttributeSyntax attributeSyntax)
@@ -111,7 +109,6 @@ public class ExposeAttributeAnalyzer : DiagnosticAnalyzer
             return;
         }
 
-        // Check for duplicate interfaces
         foreach (var argument in arguments)
         {
             if (argument.Expression is not TypeOfExpressionSyntax typeOfExpression)
@@ -122,7 +119,6 @@ public class ExposeAttributeAnalyzer : DiagnosticAnalyzer
             var typeInfo = context.SemanticModel.GetTypeInfo(typeOfExpression.Type);
             if (typeInfo.Type?.TypeKind != TypeKind.Interface)
             {
-                // Type is not an interface
                 var diagnostic = Diagnostic.Create(
                     ExposeTypeMustBeInterface,
                     typeOfExpression.Type.GetLocation(),
@@ -141,7 +137,6 @@ public class ExposeAttributeAnalyzer : DiagnosticAnalyzer
             return;
         }
 
-        // Check for duplicate interfaces
         var uniqueInterfaces = new HashSet<string>();
         foreach (var argument in arguments)
         {
@@ -153,7 +148,6 @@ public class ExposeAttributeAnalyzer : DiagnosticAnalyzer
             var typeInfo = context.SemanticModel.GetTypeInfo(typeOfExpression.Type);
             if (typeInfo.Type?.TypeKind == TypeKind.Interface && !uniqueInterfaces.Add(typeInfo.Type.ToDisplayString()))
             {
-                // Duplicate interface
                 var diagnostic = Diagnostic.Create(
                     DuplicateExposeAttribute,
                     typeOfExpression.Type.GetLocation(),
@@ -164,7 +158,7 @@ public class ExposeAttributeAnalyzer : DiagnosticAnalyzer
         }
     }
 
-    private void VerifyUnionTypesImplementExposedInterfaces(SyntaxNodeAnalysisContext context, AttributeSyntax exposeAttribute)
+    private void VerifyUnionTypesExposes(SyntaxNodeAnalysisContext context, AttributeSyntax exposeAttribute)
     {
         if (exposeAttribute.Parent?.Parent is not TypeDeclarationSyntax structDeclaration)
         {

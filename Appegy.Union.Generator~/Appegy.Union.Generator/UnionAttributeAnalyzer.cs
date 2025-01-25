@@ -1,4 +1,5 @@
-﻿using System.Collections.Immutable;
+﻿using System.Collections.Generic;
+using System.Collections.Immutable;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -11,7 +12,12 @@ namespace Appegy.Union.Generator;
 [DiagnosticAnalyzer(LanguageNames.CSharp)]
 public class UnionAttributeAnalyzer : DiagnosticAnalyzer
 {
-    public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(NotStruct, NotPartial, NoTypesProvided);
+    public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics =>
+        ImmutableArray.Create(
+            NotPartial,
+            NoTypesProvided,
+            NotStruct,
+            DuplicateUnionType);
 
     public override void Initialize(AnalysisContext context)
     {
@@ -29,46 +35,101 @@ public class UnionAttributeAnalyzer : DiagnosticAnalyzer
             return;
         }
 
+        VerifyPartialModifier(context, attributeSyntax);
+        VerifyArgumentsExistence(context, attributeSyntax);
+        VerifyAllTypesAreStruct(context, attributeSyntax);
+        VerifyNoDuplicate(context, attributeSyntax);
+    }
+
+    private static void VerifyPartialModifier(SyntaxNodeAnalysisContext context, AttributeSyntax attributeSyntax)
+    {
         if (attributeSyntax.Parent?.Parent is not StructDeclarationSyntax structDeclaration)
         {
             return;
         }
 
-        if (!structDeclaration.Modifiers.Any(SyntaxKind.PartialKeyword))
+        if (structDeclaration.Modifiers.Any(SyntaxKind.PartialKeyword))
         {
-            var diagnostic = Diagnostic.Create(
-                NotPartial,
-                structDeclaration.Identifier.GetLocation(),
-                structDeclaration.Identifier.Text);
-
-            context.ReportDiagnostic(diagnostic);
+            return;
         }
 
+        var diagnostic = Diagnostic.Create(
+            NotPartial,
+            structDeclaration.Identifier.GetLocation(),
+            structDeclaration.Identifier.Text);
+
+        context.ReportDiagnostic(diagnostic);
+    }
+
+    private void VerifyArgumentsExistence(SyntaxNodeAnalysisContext context, AttributeSyntax attributeSyntax)
+    {
+        var arguments = attributeSyntax.ArgumentList?.Arguments;
+        if (arguments != null && arguments.Value.Count != 0)
+        {
+            return;
+        }
+
+        var diagnostic = Diagnostic.Create(
+            NoTypesProvided,
+            attributeSyntax.GetLocation());
+
+        context.ReportDiagnostic(diagnostic);
+    }
+
+    private void VerifyAllTypesAreStruct(SyntaxNodeAnalysisContext context, AttributeSyntax attributeSyntax)
+    {
         var arguments = attributeSyntax.ArgumentList?.Arguments;
         if (arguments == null || arguments.Value.Count == 0)
         {
-            var diagnostic = Diagnostic.Create(
-                NoTypesProvided,
-                attributeSyntax.GetLocation());
-
-            context.ReportDiagnostic(diagnostic);
             return;
         }
 
         foreach (var argument in arguments)
         {
-            if (argument.Expression is TypeOfExpressionSyntax typeOfExpression)
+            if (argument.Expression is not TypeOfExpressionSyntax typeOfExpression)
             {
-                var typeInfo = context.SemanticModel.GetTypeInfo(typeOfExpression.Type);
-                if (typeInfo.Type?.TypeKind != TypeKind.Struct)
-                {
-                    var diagnostic = Diagnostic.Create(
-                        NotStruct,
-                        typeOfExpression.Type.GetLocation(),
-                        typeInfo.Type?.ToDisplayString() ?? "unknown");
+                continue;
+            }
 
-                    context.ReportDiagnostic(diagnostic);
-                }
+            var typeInfo = context.SemanticModel.GetTypeInfo(typeOfExpression.Type);
+            if (typeInfo.Type?.TypeKind != TypeKind.Struct)
+            {
+                // Type is not an interface
+                var diagnostic = Diagnostic.Create(
+                    NotStruct,
+                    typeOfExpression.Type.GetLocation(),
+                    typeInfo.Type?.ToDisplayString() ?? "unknown");
+
+                context.ReportDiagnostic(diagnostic);
+            }
+        }
+    }
+
+    private void VerifyNoDuplicate(SyntaxNodeAnalysisContext context, AttributeSyntax attributeSyntax)
+    {
+        var arguments = attributeSyntax.ArgumentList?.Arguments;
+        if (arguments == null || arguments.Value.Count == 0)
+        {
+            return;
+        }
+
+        var uniqueTypes = new HashSet<string>();
+        foreach (var argument in arguments)
+        {
+            if (argument.Expression is not TypeOfExpressionSyntax typeOfExpression)
+            {
+                continue;
+            }
+
+            var typeInfo = context.SemanticModel.GetTypeInfo(typeOfExpression.Type);
+            if (typeInfo.Type?.TypeKind == TypeKind.Struct && !uniqueTypes.Add(typeInfo.Type.ToDisplayString()))
+            {
+                var diagnostic = Diagnostic.Create(
+                    DuplicateUnionType,
+                    typeOfExpression.Type.GetLocation(),
+                    typeInfo.Type.ToDisplayString());
+
+                context.ReportDiagnostic(diagnostic);
             }
         }
     }
