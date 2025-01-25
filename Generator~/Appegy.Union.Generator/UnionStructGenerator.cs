@@ -35,10 +35,10 @@ public class UnionStructGenerator : IIncrementalGenerator
             .Where(t => t.AttributeFound)
             .Select((t, _) => t.StructContext);
 
-        context.RegisterSourceOutput(provider, GenerateOneOfStruct);
+        context.RegisterSourceOutput(provider, GenerateUnionStruct);
     }
 
-    private void GenerateOneOfStruct(SourceProductionContext sourceContext, StructDeclarationContext structContext)
+    private void GenerateUnionStruct(SourceProductionContext sourceContext, StructDeclarationContext structContext)
     {
         var syntax = structContext.Syntax;
         var types = structContext.Types;
