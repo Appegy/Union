@@ -1,12 +1,8 @@
-﻿using System.IO;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Appegy.Storage.Example
+namespace Appegy.Union.Sample
 {
     public class GameManager : MonoBehaviour
     {
-        private void Awake()
-        {
-        }
     }
 }
