@@ -49,7 +49,7 @@ public class UnionAttributeGenerator : IIncrementalGenerator
             using var codeWriter = new IndentedTextWriter(streamWriter, "    ");
 
             GenerateHeader(codeWriter, syntax);
-            GenerateDeclaration(codeWriter, syntax);
+            GenerateDeclaration(codeWriter, syntax, types);
             GenerateTypeEnum(codeWriter, types);
             GenerateFields(codeWriter, types);
             GenerateProperties(codeWriter, types);
@@ -81,13 +81,23 @@ public class UnionAttributeGenerator : IIncrementalGenerator
         }
     }
 
-    private static void GenerateDeclaration(IndentedTextWriter codeWriter, StructDeclarationSyntax syntax)
+    private static void GenerateDeclaration(IndentedTextWriter codeWriter, StructDeclarationSyntax syntax, ImmutableList<INamedTypeSymbol> types)
     {
         codeWriter.WriteLine("[StructLayout(LayoutKind.Explicit, Pack = 1)]");
         codeWriter.Write("public partial struct ");
-        codeWriter.Write(syntax.Identifier.Text);
+        codeWriter.WriteLine(syntax.Identifier.Text);
 
-        codeWriter.WriteLine();
+        codeWriter.Write("    : System.IEquatable<");
+        codeWriter.Write(syntax.Identifier.Text);
+        codeWriter.WriteLine(">");
+
+        foreach (var type in types)
+        {
+            codeWriter.Write("    , System.IEquatable<");
+            codeWriter.Write(type.ToDisplayString());
+            codeWriter.WriteLine(">");
+        }
+
         codeWriter.WriteLine('{');
         codeWriter.Indent++;
     }
