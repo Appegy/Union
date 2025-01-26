@@ -3,7 +3,9 @@ using System.Collections.Immutable;
 using System.IO;
 using System.Linq;
 using System.Text;
+using Appegy.Union.Generator.Utilities;
 using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Text;
 using static Appegy.Union.Generator.AttributesNames;
@@ -11,7 +13,7 @@ using static Appegy.Union.Generator.AttributesNames;
 namespace Appegy.Union.Generator;
 
 [Generator]
-public class UnionStructGenerator : IIncrementalGenerator
+public class UnionAttributeGenerator : IIncrementalGenerator
 {
     public void Initialize(IncrementalGeneratorInitializationContext context)
     {
@@ -22,15 +24,20 @@ public class UnionStructGenerator : IIncrementalGenerator
                 predicate: static (syntax, _) => syntax is StructDeclarationSyntax,
                 transform: static (ctx, _) =>
                 {
-                    var typeSyntax = (StructDeclarationSyntax)ctx.TargetNode;
+                    var syntax = (StructDeclarationSyntax)ctx.TargetNode;
                     var attribute = ctx.Attributes.First();
-                    var types = GetUnionTypesFromAttribute(attribute);
-                    return (typeSyntax, types);
+                    var types = attribute.GetTypesFromConstructor(TypeKind.Struct);
+                    return (syntax, types);
                 });
 
         context.RegisterSourceOutput(sources, static (ctx, input) =>
         {
             var (syntax, types) = input;
+
+            if (!syntax.Modifiers.Any(SyntaxKind.PartialKeyword))
+            {
+                return;
+            }
 
             if (types.Count == 0)
             {
@@ -53,23 +60,6 @@ public class UnionStructGenerator : IIncrementalGenerator
             streamWriter.Flush();
             ctx.AddSource($"{syntax.Identifier.Text}_Union.g.cs", SourceText.From(memoryStream, Encoding.UTF8, canBeEmbedded: true));
         });
-    }
-
-    private static ImmutableList<INamedTypeSymbol> GetUnionTypesFromAttribute(AttributeData attribute)
-    {
-        var types = ImmutableList.CreateBuilder<INamedTypeSymbol>();
-        var argument = attribute.ConstructorArguments.First();
-
-        foreach (var typedConstant in argument.Values)
-        {
-            if (typedConstant.Value is not INamedTypeSymbol symbol)
-            {
-                continue;
-            }
-            types.Add(symbol);
-        }
-
-        return types.ToImmutable();
     }
 
     private static void GenerateHeader(IndentedTextWriter codeWriter, StructDeclarationSyntax syntax)
