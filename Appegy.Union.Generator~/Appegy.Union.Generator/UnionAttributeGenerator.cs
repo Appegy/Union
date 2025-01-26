@@ -56,6 +56,7 @@ public class UnionAttributeGenerator : IIncrementalGenerator
             GenerateConstructors(codeWriter, syntax, types);
             GenerateToString(codeWriter, types);
             GenerateGetHashCode(codeWriter, types);
+            GenerateEquals(codeWriter, syntax, types);
             GenerateOperators(codeWriter, syntax, types);
             GenerateStructureClose(codeWriter, syntax);
 
@@ -236,6 +237,56 @@ public class UnionAttributeGenerator : IIncrementalGenerator
         codeWriter.WriteLine("};");
         codeWriter.WriteLine();
     }
+
+    private static void GenerateEquals(IndentedTextWriter codeWriter, StructDeclarationSyntax syntax, ImmutableList<INamedTypeSymbol> types)
+    {
+        codeWriter.WriteLine("public override bool Equals(object boxed) => boxed switch");
+        codeWriter.WriteLine('{');
+        codeWriter.Indent++;
+        codeWriter.Write(syntax.Identifier.Text);
+        codeWriter.WriteLine(" other => Equals(other),");
+        foreach (var type in types)
+        {
+            codeWriter.Write(type.ToDisplayString());
+            codeWriter.WriteLine(" other => Equals(other),");
+        }
+        codeWriter.WriteLine("_ => throw new InvalidOperationException($\"Unknown type of union: {_type}\")");
+        codeWriter.Indent--;
+        codeWriter.WriteLine("};");
+        codeWriter.WriteLine();
+
+        codeWriter.Write("public bool Equals(");
+        codeWriter.Write(syntax.Identifier.Text);
+        codeWriter.WriteLine(" other) => _type switch");
+        codeWriter.WriteLine('{');
+        codeWriter.Indent++;
+        foreach (var type in types)
+        {
+            codeWriter.Write("Kind.");
+            codeWriter.Write(type.Name);
+            codeWriter.Write(" => _");
+            codeWriter.Write(type.Name.ToCamelCase());
+            codeWriter.WriteLine(".Equals(other),");
+        }
+        codeWriter.WriteLine("_ => throw new InvalidOperationException($\"Unknown type of union: {_type}\")");
+        codeWriter.Indent--;
+        codeWriter.WriteLine("};");
+        codeWriter.WriteLine();
+
+        foreach (var type in types)
+        {
+            codeWriter.Write("public bool Equals(");
+            codeWriter.Write(type.ToDisplayString());
+            codeWriter.Write(" other) => _type == Kind.");
+            codeWriter.Write(type.Name);
+            codeWriter.Write(" && _");
+            codeWriter.Write(type.Name.ToCamelCase());
+            codeWriter.WriteLine(".Equals(other);");
+        }
+
+        codeWriter.WriteLine();
+    }
+
     private static void GenerateOperators(IndentedTextWriter codeWriter, StructDeclarationSyntax syntax, ImmutableList<INamedTypeSymbol> types)
     {
         for (var i = 0; i < types.Count; i++)
