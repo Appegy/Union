@@ -8,7 +8,7 @@ public static class DiagnosticDescriptors
 
     public static DiagnosticDescriptor NotStruct { get; } = new(
         id: "UNION001",
-        title: "Type has no be struct",
+        title: "Type has to be struct",
         messageFormat: "The type '{0}' must be a struct to use [Union].",
         category: Category,
         defaultSeverity: DiagnosticSeverity.Error,
@@ -58,6 +58,30 @@ public static class DiagnosticDescriptors
         id: "UNION007",
         title: "Type does not implement interface",
         messageFormat: "The type '{0}' does not implement the interface '{1}' specified in [Expose].",
+        category: Category,
+        defaultSeverity: DiagnosticSeverity.Error,
+        isEnabledByDefault: true);
+
+    public static DiagnosticDescriptor ExposeRequiresUnion { get; } = new(
+        id: "UNION008",
+        title: "ExposeAttribute requires UnionAttribute",
+        messageFormat: "The [Expose] attribute must be used together with [Union] attribute.",
+        category: Category,
+        defaultSeverity: DiagnosticSeverity.Error,
+        isEnabledByDefault: true);
+
+    public static DiagnosticDescriptor NoInterfacesProvided { get; } = new(
+        id: "UNION009",
+        title: "No interfaces provided in [Expose] attribute",
+        messageFormat: "The [Expose] attribute must specify at least one interface.",
+        category: Category,
+        defaultSeverity: DiagnosticSeverity.Error,
+        isEnabledByDefault: true);
+
+    public static DiagnosticDescriptor DuplicateUnionType { get; } = new(
+        id: "UNION010",
+        title: "Duplicate type in [Union] attribute",
+        messageFormat: "The type '{0}' is specified more than once in [Union].",
         category: Category,
         defaultSeverity: DiagnosticSeverity.Error,
         isEnabledByDefault: true);

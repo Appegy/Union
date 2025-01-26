@@ -1,4 +1,6 @@
-﻿public static class StringExtensions
+﻿namespace Appegy.Union.Generator.Utilities;
+
+public static class StringExtensions
 {
     /// <summary>
     /// Converts a string to camelCase.
