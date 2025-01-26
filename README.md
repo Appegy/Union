@@ -270,11 +270,11 @@ namespace Appegy.Union.Cells
             _ => throw new InvalidOperationException($"Unknown type of union: {_type}")
         };
 
-        public bool Equals(PuzzleCell other) => _type switch
+        public bool Equals(PuzzleCell other) => _type == other.Type && _type switch
         {
-            Kind.VoidCell => _voidCell.Equals(other),
-            Kind.EmptyCell => _emptyCell.Equals(other),
-            Kind.RegularCell => _regularCell.Equals(other),
+            Kind.VoidCell => _voidCell.Equals(other.VoidCell),
+            Kind.EmptyCell => _emptyCell.Equals(other.EmptyCell),
+            Kind.RegularCell => _regularCell.Equals(other.RegularCell),
             _ => throw new InvalidOperationException($"Unknown type of union: {_type}")
         };
 
@@ -290,8 +290,21 @@ namespace Appegy.Union.Cells
 
         public static implicit operator Appegy.Union.Cells.Variants.RegularCell(PuzzleCell other) => other.RegularCell;
         public static implicit operator PuzzleCell(Appegy.Union.Cells.Variants.RegularCell other) => new PuzzleCell(other);
+
+        public static bool operator ==(PuzzleCell a, PuzzleCell b) => a.Equals(b);
+        public static bool operator !=(PuzzleCell a, PuzzleCell b) => !a.Equals(b);
+
+        public static bool operator ==(PuzzleCell a, Appegy.Union.Cells.Variants.VoidCell b) => a.Equals(b);
+        public static bool operator !=(PuzzleCell a, Appegy.Union.Cells.Variants.VoidCell b) => !a.Equals(b);
+
+        public static bool operator ==(PuzzleCell a, Appegy.Union.Cells.Variants.EmptyCell b) => a.Equals(b);
+        public static bool operator !=(PuzzleCell a, Appegy.Union.Cells.Variants.EmptyCell b) => !a.Equals(b);
+
+        public static bool operator ==(PuzzleCell a, Appegy.Union.Cells.Variants.RegularCell b) => a.Equals(b);
+        public static bool operator !=(PuzzleCell a, Appegy.Union.Cells.Variants.RegularCell b) => !a.Equals(b);
     }
 }
+
 ```
 
 ### Generated Code for ExposeAttribute
@@ -302,19 +315,19 @@ using System;
 
 namespace Appegy.Union.Cells
 {
-public partial struct PuzzleCell :
-global::Appegy.Union.Cells.IPuzzleCell,
-global::Appegy.Union.Cells.IMatchableCell,
-global::Appegy.Union.Cells.IMovableCell
-{
-#region Implement IPuzzleCell
-public short Id => _type switch
-{
-Kind.VoidCell => _voidCell.Id,
-Kind.EmptyCell => _emptyCell.Id,
-Kind.RegularCell => _regularCell.Id,
-_ => throw new ArgumentOutOfRangeException(nameof(Type), $"Unknown cell type: {_type}")
-};
+    public partial struct PuzzleCell :
+        global::Appegy.Union.Cells.IPuzzleCell,
+        global::Appegy.Union.Cells.IMatchableCell,
+        global::Appegy.Union.Cells.IMovableCell
+    {
+        #region Implement IPuzzleCell
+        public short Id => _type switch
+        {
+            Kind.VoidCell => _voidCell.Id,
+            Kind.EmptyCell => _emptyCell.Id,
+            Kind.RegularCell => _regularCell.Id,
+            _ => throw new ArgumentOutOfRangeException(nameof(Type), $"Unknown cell type: {_type}")
+        };
 
         #endregion Implement IPuzzleCell
 
