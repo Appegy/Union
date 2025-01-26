@@ -302,19 +302,19 @@ using System;
 
 namespace Appegy.Union.Cells
 {
-public partial struct PuzzleCell :
-global::Appegy.Union.Cells.IPuzzleCell,
-global::Appegy.Union.Cells.IMatchableCell,
-global::Appegy.Union.Cells.IMovableCell
-{
-#region Implement IPuzzleCell
-public short Id => _type switch
-{
-Kind.VoidCell => _voidCell.Id,
-Kind.EmptyCell => _emptyCell.Id,
-Kind.RegularCell => _regularCell.Id,
-_ => throw new ArgumentOutOfRangeException(nameof(Type), $"Unknown cell type: {_type}")
-};
+    public partial struct PuzzleCell :
+        global::Appegy.Union.Cells.IPuzzleCell,
+        global::Appegy.Union.Cells.IMatchableCell,
+        global::Appegy.Union.Cells.IMovableCell
+    {
+        #region Implement IPuzzleCell
+        public short Id => _type switch
+        {
+            Kind.VoidCell => _voidCell.Id,
+            Kind.EmptyCell => _emptyCell.Id,
+            Kind.RegularCell => _regularCell.Id,
+            _ => throw new ArgumentOutOfRangeException(nameof(Type), $"Unknown cell type: {_type}")
+        };
 
         #endregion Implement IPuzzleCell
 
