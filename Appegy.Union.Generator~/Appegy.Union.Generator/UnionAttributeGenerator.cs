@@ -54,6 +54,7 @@ public class UnionAttributeGenerator : IIncrementalGenerator
             GenerateFields(codeWriter, types);
             GenerateProperties(codeWriter, types);
             GenerateConstructors(codeWriter, syntax, types);
+            GenerateToString(codeWriter, types);
             GenerateOperators(codeWriter, syntax, types);
             GenerateStructureClose(codeWriter, syntax);
 
@@ -173,7 +174,7 @@ public class UnionAttributeGenerator : IIncrementalGenerator
             codeWriter.Write(syntax.Identifier.Text);
             codeWriter.Write("(");
             codeWriter.Write(type.ToDisplayString());
-            codeWriter.WriteLine(" cell)");
+            codeWriter.WriteLine(" value)");
             codeWriter.WriteLine('{');
             codeWriter.Indent++;
             codeWriter.Write("_type = Kind.");
@@ -190,13 +191,31 @@ public class UnionAttributeGenerator : IIncrementalGenerator
                 codeWriter.WriteLine(" = default;");
             }
             codeWriter.Write(fieldName);
-            codeWriter.WriteLine(" = cell;");
+            codeWriter.WriteLine(" = value;");
             codeWriter.Indent--;
             codeWriter.WriteLine('}');
             codeWriter.WriteLine();
         }
     }
 
+    private static void GenerateToString(IndentedTextWriter codeWriter, ImmutableList<INamedTypeSymbol> types)
+    {
+        codeWriter.WriteLine("public override string ToString() => _type switch");
+        codeWriter.WriteLine('{');
+        codeWriter.Indent++;
+        foreach (var type in types)
+        {
+            codeWriter.Write("Kind.");
+            codeWriter.Write(type.Name);
+            codeWriter.Write(" => _");
+            codeWriter.Write(type.Name.ToCamelCase());
+            codeWriter.WriteLine(".ToString(),");
+        }
+        codeWriter.WriteLine("_ => throw new InvalidOperationException($\"Unknown type of union: {_type}\")");
+        codeWriter.Indent--;
+        codeWriter.WriteLine("};");
+        codeWriter.WriteLine();
+    }
     private static void GenerateOperators(IndentedTextWriter codeWriter, StructDeclarationSyntax syntax, ImmutableList<INamedTypeSymbol> types)
     {
         for (var i = 0; i < types.Count; i++)
@@ -208,7 +227,7 @@ public class UnionAttributeGenerator : IIncrementalGenerator
             codeWriter.Write(type.ToDisplayString());
             codeWriter.Write("(");
             codeWriter.Write(syntax.Identifier.Text);
-            codeWriter.Write(" cell) => cell.");
+            codeWriter.Write(" other) => other.");
             codeWriter.Write(typeName);
             codeWriter.WriteLine(";");
 
@@ -217,9 +236,9 @@ public class UnionAttributeGenerator : IIncrementalGenerator
             codeWriter.Write("(");
             codeWriter.Write(type.ToDisplayString());
 
-            codeWriter.Write(" cell) => new ");
+            codeWriter.Write(" other) => new ");
             codeWriter.Write(syntax.Identifier.Text);
-            codeWriter.WriteLine("(cell);");
+            codeWriter.WriteLine("(other);");
 
             if (i < types.Count - 1)
             {
