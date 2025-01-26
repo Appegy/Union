@@ -267,7 +267,7 @@ public class UnionAttributeGenerator : IIncrementalGenerator
 
         codeWriter.Write("public bool Equals(");
         codeWriter.Write(syntax.Identifier.Text);
-        codeWriter.WriteLine(" other) => _type switch");
+        codeWriter.WriteLine(" other) => _type == other.Type && _type switch");
         codeWriter.WriteLine('{');
         codeWriter.Indent++;
         foreach (var type in types)
