@@ -1,5 +1,4 @@
-﻿using System;
-using Appegy.Union.Cells.Variants;
+﻿using Appegy.Union.Cells.Variants;
 
 namespace Appegy.Union.Cells
 {
