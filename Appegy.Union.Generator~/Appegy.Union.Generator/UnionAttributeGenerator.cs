@@ -58,6 +58,7 @@ public class UnionAttributeGenerator : IIncrementalGenerator
             GenerateGetHashCode(codeWriter, types);
             GenerateEquals(codeWriter, syntax, types);
             GenerateOperators(codeWriter, syntax, types);
+            GenerateComparisonOperators(codeWriter, syntax, types);
             GenerateStructureClose(codeWriter, syntax);
 
             streamWriter.Flush();
@@ -276,7 +277,9 @@ public class UnionAttributeGenerator : IIncrementalGenerator
             codeWriter.Write(type.Name);
             codeWriter.Write(" => _");
             codeWriter.Write(type.Name.ToCamelCase());
-            codeWriter.WriteLine(".Equals(other),");
+            codeWriter.Write(".Equals(other.");
+            codeWriter.Write(type.Name);
+            codeWriter.WriteLine("),");
         }
         codeWriter.WriteLine("_ => throw new InvalidOperationException($\"Unknown type of union: {_type}\")");
         codeWriter.Indent--;
@@ -320,7 +323,39 @@ public class UnionAttributeGenerator : IIncrementalGenerator
             codeWriter.Write(" other) => new ");
             codeWriter.Write(syntax.Identifier.Text);
             codeWriter.WriteLine("(other);");
+            codeWriter.WriteLine();
+        }
+    }
 
+    private static void GenerateComparisonOperators(IndentedTextWriter codeWriter, StructDeclarationSyntax syntax, ImmutableList<INamedTypeSymbol> types)
+    {
+        codeWriter.Write("public static bool operator ==(");
+        codeWriter.Write(syntax.Identifier.Text);
+        codeWriter.Write(" a, ");
+        codeWriter.Write(syntax.Identifier.Text);
+        codeWriter.WriteLine(" b) => a.Equals(b);");
+
+        codeWriter.Write("public static bool operator !=(");
+        codeWriter.Write(syntax.Identifier.Text);
+        codeWriter.Write(" a, ");
+        codeWriter.Write(syntax.Identifier.Text);
+        codeWriter.WriteLine(" b) => !a.Equals(b);");
+        codeWriter.WriteLine();
+
+        for (var i = 0; i < types.Count; i++)
+        {
+            var type = types[i];
+            codeWriter.Write("public static bool operator ==(");
+            codeWriter.Write(syntax.Identifier.Text);
+            codeWriter.Write(" a, ");
+            codeWriter.Write(type.ToDisplayString());
+            codeWriter.WriteLine(" b) => a.Equals(b);");
+
+            codeWriter.Write("public static bool operator !=(");
+            codeWriter.Write(syntax.Identifier.Text);
+            codeWriter.Write(" a, ");
+            codeWriter.Write(type.ToDisplayString());
+            codeWriter.WriteLine(" b) => !a.Equals(b);");
             if (i < types.Count - 1)
             {
                 codeWriter.WriteLine();
