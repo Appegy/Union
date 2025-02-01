@@ -2,7 +2,7 @@
 using System.Linq;
 using Microsoft.CodeAnalysis;
 
-namespace Appegy.Union.Generator.Utilities;
+namespace Appegy.Union.Generator;
 
 public static class SyntaxTreeExtensions
 {

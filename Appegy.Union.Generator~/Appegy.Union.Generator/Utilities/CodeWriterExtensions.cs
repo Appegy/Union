@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-namespace Appegy.Union.Generator.Utilities;
+namespace Appegy.Union.Generator;
 
 internal static class CodeWriterExtensions
 {
