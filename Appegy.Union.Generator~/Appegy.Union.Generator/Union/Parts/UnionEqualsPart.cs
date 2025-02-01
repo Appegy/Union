@@ -2,7 +2,7 @@
 
 namespace Appegy.Union.Generator;
 
-public class UnionEqualsRegion : GeneratorPart<UnionAttributePartInput>
+public class UnionEqualsPart : GeneratorPart<UnionAttributePartInput>
 {
     public override string Description => "Override Equals";
 

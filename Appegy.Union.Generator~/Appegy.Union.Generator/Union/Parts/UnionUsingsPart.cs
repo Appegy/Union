@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Appegy.Union.Generator;
 
-public class UnionUsingsRegion : GeneratorPart<UnionAttributePartInput>
+public class UnionUsingsPart : GeneratorPart<UnionAttributePartInput>
 {
     public override string Description => "Override .ToString";
 

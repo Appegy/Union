@@ -2,7 +2,7 @@
 
 namespace Appegy.Union.Generator;
 
-public class UnionTypeEnumRegion : GeneratorPart<UnionAttributePartInput>
+public class UnionTypeEnumPart : GeneratorPart<UnionAttributePartInput>
 {
     public override string Description => "Enum for wrapped types";
 

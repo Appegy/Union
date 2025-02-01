@@ -2,7 +2,7 @@
 
 namespace Appegy.Union.Generator;
 
-public class UnionFieldsRegion : GeneratorPart<UnionAttributePartInput>
+public class UnionFieldsPart : GeneratorPart<UnionAttributePartInput>
 {
     public override string Description => "Private fields";
 

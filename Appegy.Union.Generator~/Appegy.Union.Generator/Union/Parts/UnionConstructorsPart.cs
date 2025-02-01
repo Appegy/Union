@@ -3,7 +3,7 @@ using Microsoft.CodeAnalysis;
 
 namespace Appegy.Union.Generator;
 
-public class UnionConstructorsRegion : GeneratorPart<UnionAttributePartInput>
+public class UnionConstructorsPart : GeneratorPart<UnionAttributePartInput>
 {
     public override string Description => "Constructors";
 

@@ -1,15 +1,15 @@
 ﻿using System.CodeDom.Compiler;
-using System.Collections.Immutable;
+using System.Collections.Generic;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Appegy.Union.Generator;
 
 internal static class CodeWriterExtensions
 {
-    public static void AppendParts<T>(this IndentedTextWriter codeWriter, ImmutableArray<GeneratorPart<T>> parts, T input)
+    public static void AppendParts<T>(this IndentedTextWriter codeWriter, IReadOnlyList<GeneratorPart<T>> parts, T input)
         where T : struct
     {
-        for (var i = 0; i < parts.Length; i++)
+        for (var i = 0; i < parts.Count; i++)
         {
             var part = parts[i];
             if (part.InRegion)
@@ -28,7 +28,7 @@ internal static class CodeWriterExtensions
                 codeWriter.WriteLine(part.Description);
             }
 
-            if (i < parts.Length - 1 && part.NewLineAtEnd)
+            if (i < parts.Count - 1)
             {
                 codeWriter.WriteLine();
             }

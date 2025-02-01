@@ -1,12 +1,12 @@
 ﻿using System.CodeDom.Compiler;
-using System.Collections.Immutable;
+using System.Collections.Generic;
 
 namespace Appegy.Union.Generator;
 
-public class ScopedGeneratorPart<T>(ImmutableArray<GeneratorPart<T>> innerParts) : GeneratorPart<T>
+public class ScopedGeneratorPart<T>(IReadOnlyList<GeneratorPart<T>> innerParts) : GeneratorPart<T>
     where T : struct
 {
-    protected readonly ImmutableArray<GeneratorPart<T>> InnerParts = innerParts;
+    protected readonly IReadOnlyList<GeneratorPart<T>> InnerParts = innerParts;
 
     public override string Description => "";
 

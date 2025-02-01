@@ -2,7 +2,7 @@
 
 namespace Appegy.Union.Generator;
 
-public class UnionOperatorsRegion : GeneratorPart<UnionAttributePartInput>
+public class UnionOperatorsPart : GeneratorPart<UnionAttributePartInput>
 {
     public override string Description => "Override implicit operators";
 

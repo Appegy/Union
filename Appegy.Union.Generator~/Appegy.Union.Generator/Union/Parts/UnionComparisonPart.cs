@@ -2,7 +2,7 @@
 
 namespace Appegy.Union.Generator;
 
-public class UnionComparisonRegion : GeneratorPart<UnionAttributePartInput>
+public class UnionComparisonPart : GeneratorPart<UnionAttributePartInput>
 {
     public override string Description => "Override comparison operators";
 

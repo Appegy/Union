@@ -2,10 +2,10 @@
 
 namespace Appegy.Union.Generator;
 
-public class UnionDeclarationRegion : GeneratorPart<UnionAttributePartInput>
+public class UnionDeclarationPart : GeneratorPart<UnionAttributePartInput>
 {
     public override string Description => "";
-    public override bool NewLineAtEnd => false;
+    public virtual bool NewLineAtEnd => false;
 
     public override void Generate(IndentedTextWriter codeWriter, UnionAttributePartInput input)
     {

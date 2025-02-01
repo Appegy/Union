@@ -1,10 +1,10 @@
 ﻿using System.CodeDom.Compiler;
-using System.Collections.Immutable;
+using System.Collections.Generic;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Appegy.Union.Generator;
 
-public class UnionParentScopedPart(ImmutableArray<GeneratorPart<UnionAttributePartInput>> innerParts) : ScopedGeneratorPart<UnionAttributePartInput>(innerParts)
+public class UnionParentScopedPart(IReadOnlyList<GeneratorPart<UnionAttributePartInput>> innerParts) : ScopedGeneratorPart<UnionAttributePartInput>(innerParts)
 {
     public override string Description => "";
 

@@ -1,5 +1,5 @@
 ﻿using System.CodeDom.Compiler;
-using System.Collections.Immutable;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -14,22 +14,25 @@ namespace Appegy.Union.Generator;
 [Generator]
 public class UnionAttributeGenerator : IIncrementalGenerator
 {
-    private static ImmutableArray<GeneratorPart<UnionAttributePartInput>> Regions { get; } =
-        ImmutableArray.Create<GeneratorPart<UnionAttributePartInput>>(
-            new UnionUsingsRegion(),
-            new UnionParentScopedPart(ImmutableArray.Create<GeneratorPart<UnionAttributePartInput>>(
-                new UnionDeclarationRegion(),
-                new ScopedGeneratorPart<UnionAttributePartInput>(ImmutableArray.Create<GeneratorPart<UnionAttributePartInput>>(
-                    new UnionTypeEnumRegion(),
-                    new UnionFieldsRegion(),
-                    new UnionPropertiesRegion(),
-                    new UnionConstructorsRegion(),
-                    new UnionToStringRegion(),
-                    new UnionGetHashCodeRegion(),
-                    new UnionEqualsRegion(),
-                    new UnionOperatorsRegion(),
-                    new UnionComparisonRegion()
-                )))));
+    private static IReadOnlyList<GeneratorPart<UnionAttributePartInput>> Parts { get; } =
+    [
+        new UnionUsingsPart(),
+        new UnionParentScopedPart([
+            new UnionDeclarationPart(),
+            new ScopedGeneratorPart<UnionAttributePartInput>([
+                    new UnionTypeEnumPart(),
+                    new UnionFieldsPart(),
+                    new UnionPropertiesPart(),
+                    new UnionConstructorsPart(),
+                    new UnionToStringPart(),
+                    new UnionGetHashCodePart(),
+                    new UnionEqualsPart(),
+                    new UnionOperatorsPart(),
+                    new UnionComparisonPart()
+                ]
+            )
+        ])
+    ];
 
     public void Initialize(IncrementalGeneratorInitializationContext context)
     {
@@ -64,7 +67,7 @@ public class UnionAttributeGenerator : IIncrementalGenerator
             using var streamWriter = new StreamWriter(memoryStream, Encoding.UTF8);
             using var codeWriter = new IndentedTextWriter(streamWriter, "    ");
 
-            codeWriter.AppendParts(Regions, new UnionAttributePartInput(syntax, types));
+            codeWriter.AppendParts(Parts, new UnionAttributePartInput(syntax, types));
 
             streamWriter.Flush();
             ctx.AddSource($"{syntax.Identifier.Text}_Union.g.cs", SourceText.From(memoryStream, Encoding.UTF8, canBeEmbedded: true));

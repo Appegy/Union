@@ -2,7 +2,7 @@
 
 namespace Appegy.Union.Generator;
 
-public class UnionPropertiesRegion : GeneratorPart<UnionAttributePartInput>
+public class UnionPropertiesPart : GeneratorPart<UnionAttributePartInput>
 {
     public override string Description => "Public properties";
 
