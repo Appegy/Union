@@ -319,37 +319,55 @@ namespace Appegy.Union.Cells
     {
         #region Implement IPuzzleCell
 
-        public short Id => _type switch
+        public short Id
         {
-            Kind.VoidCell => _voidCell.Id,
-            Kind.EmptyCell => _emptyCell.Id,
-            Kind.RegularCell => _regularCell.Id,
-            _ => throw new InvalidOperationException($"Unknown type of union: {_type}")
-        };
+            get
+            {
+                switch (_type)
+                {
+                    case Kind.VoidCell: return _voidCell.Id;
+                    case Kind.EmptyCell: return _emptyCell.Id;
+                    case Kind.RegularCell: return _regularCell.Id;
+                    default: throw new InvalidOperationException($"Unknown type of union: {_type}");
+                }
+            }
+        }
 
         #endregion Implement IPuzzleCell
 
         #region Implement IMatchableCell
 
-        public bool Matchable => _type switch
+        public bool Matchable
         {
-            Kind.VoidCell => _voidCell.Matchable,
-            Kind.EmptyCell => _emptyCell.Matchable,
-            Kind.RegularCell => _regularCell.Matchable,
-            _ => throw new InvalidOperationException($"Unknown type of union: {_type}")
-        };
+            get
+            {
+                switch (_type)
+                {
+                    case Kind.VoidCell: return _voidCell.Matchable;
+                    case Kind.EmptyCell: return _emptyCell.Matchable;
+                    case Kind.RegularCell: return _regularCell.Matchable;
+                    default: throw new InvalidOperationException($"Unknown type of union: {_type}");
+                }
+            }
+        }
 
         #endregion Implement IMatchableCell
 
         #region Implement IMovableCell
 
-        public bool Movable => _type switch
+        public bool Movable
         {
-            Kind.VoidCell => _voidCell.Movable,
-            Kind.EmptyCell => _emptyCell.Movable,
-            Kind.RegularCell => _regularCell.Movable,
-            _ => throw new InvalidOperationException($"Unknown type of union: {_type}")
-        };
+            get
+            {
+                switch (_type)
+                {
+                    case Kind.VoidCell: return _voidCell.Movable;
+                    case Kind.EmptyCell: return _emptyCell.Movable;
+                    case Kind.RegularCell: return _regularCell.Movable;
+                    default: throw new InvalidOperationException($"Unknown type of union: {_type}");
+                }
+            }
+        }
 
         #endregion Implement IMovableCell
     }
