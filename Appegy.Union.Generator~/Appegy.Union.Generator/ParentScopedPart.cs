@@ -54,7 +54,8 @@ public abstract class ParentScopedPart<T>(IReadOnlyList<GeneratorPart<T>> innerP
                     {
                         codeWriter.Write("partial ");
                     }
-                    codeWriter.Write(td.Keyword.Text + " ");
+                    codeWriter.Write(td.Keyword.Text);
+                    codeWriter.Write(" ");
                     codeWriter.WriteLine(td.Identifier.Text);
                     codeWriter.WriteLine("{");
                     codeWriter.Indent++;
