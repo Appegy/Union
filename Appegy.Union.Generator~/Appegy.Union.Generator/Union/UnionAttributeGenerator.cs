@@ -19,18 +19,17 @@ public class UnionAttributeGenerator : IIncrementalGenerator
         new UnionUsingsPart(),
         new UnionParentScopedPart([
             new UnionDeclarationPart(),
-            new ScopedGeneratorPart<UnionAttributePartInput>([
-                    new UnionTypeEnumPart(),
-                    new UnionFieldsPart(),
-                    new UnionPropertiesPart(),
-                    new UnionConstructorsPart(),
-                    new UnionToStringPart(),
-                    new UnionGetHashCodePart(),
-                    new UnionEqualsPart(),
-                    new UnionOperatorsPart(),
-                    new UnionComparisonPart()
-                ]
-            )
+            new ScopedPart<UnionAttributePartInput>([
+                new UnionTypeEnumPart(),
+                new UnionFieldsPart(),
+                new UnionPropertiesPart(),
+                new UnionConstructorsPart(),
+                new UnionToStringPart(),
+                new UnionGetHashCodePart(),
+                new UnionEqualsPart(),
+                new UnionOperatorsPart(),
+                new UnionComparisonPart()
+            ])
         ])
     ];
 
@@ -53,15 +52,8 @@ public class UnionAttributeGenerator : IIncrementalGenerator
         {
             var (syntax, types) = input;
 
-            if (!syntax.Modifiers.Any(SyntaxKind.PartialKeyword))
-            {
-                return;
-            }
-
-            if (types.Count == 0)
-            {
-                return;
-            }
+            if (!syntax.Modifiers.Any(SyntaxKind.PartialKeyword)) return;
+            if (types.Count == 0) return;
 
             using var memoryStream = new MemoryStream();
             using var streamWriter = new StreamWriter(memoryStream, Encoding.UTF8);

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Appegy.Union.Generator;
 
-public class ScopedGeneratorPart<T>(IReadOnlyList<GeneratorPart<T>> innerParts) : GeneratorPart<T>
+public class ScopedPart<T>(IReadOnlyList<GeneratorPart<T>> innerParts) : GeneratorPart<T>
     where T : struct
 {
     protected readonly IReadOnlyList<GeneratorPart<T>> InnerParts = innerParts;
