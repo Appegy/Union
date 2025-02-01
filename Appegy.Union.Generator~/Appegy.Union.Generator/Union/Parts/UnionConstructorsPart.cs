@@ -18,7 +18,7 @@ public class UnionConstructorsPart : GeneratorPart<UnionAttributePartInput>
             codeWriter.Write("public ");
             codeWriter.Write(syntax.Identifier.Text);
             codeWriter.Write("(");
-            codeWriter.Write(type.ToDisplayString());
+            codeWriter.Write(type.Name);
             codeWriter.WriteLine(" value)");
             codeWriter.WriteLine('{');
             codeWriter.Indent++;

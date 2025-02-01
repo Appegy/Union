@@ -14,7 +14,7 @@ public class UnionOperatorsPart : GeneratorPart<UnionAttributePartInput>
             var typeName = type.Name;
 
             codeWriter.Write("public static implicit operator ");
-            codeWriter.Write(type.ToDisplayString());
+            codeWriter.Write(type.Name);
             codeWriter.Write("(");
             codeWriter.Write(syntax.Identifier.Text);
             codeWriter.Write(" other) => other.");
@@ -24,7 +24,7 @@ public class UnionOperatorsPart : GeneratorPart<UnionAttributePartInput>
             codeWriter.Write("public static implicit operator ");
             codeWriter.Write(syntax.Identifier.Text);
             codeWriter.Write("(");
-            codeWriter.Write(type.ToDisplayString());
+            codeWriter.Write(type.Name);
 
             codeWriter.Write(" other) => new ");
             codeWriter.Write(syntax.Identifier.Text);

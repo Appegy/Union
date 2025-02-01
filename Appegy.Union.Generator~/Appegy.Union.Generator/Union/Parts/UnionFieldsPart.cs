@@ -15,7 +15,7 @@ public class UnionFieldsPart : GeneratorPart<UnionAttributePartInput>
         {
             codeWriter.WriteLine("[FieldOffset(1)]");
             codeWriter.Write("private ");
-            codeWriter.Write(type.ToDisplayString());
+            codeWriter.Write(type.Name);
             codeWriter.Write(" _");
             codeWriter.Write(type.Name.ToCamelCase());
             codeWriter.WriteLine(";");

@@ -15,7 +15,7 @@ public class UnionEqualsPart : GeneratorPart<UnionAttributePartInput>
         codeWriter.WriteLine(" other => Equals(other),");
         foreach (var type in types)
         {
-            codeWriter.Write(type.ToDisplayString());
+            codeWriter.Write(type.Name);
             codeWriter.WriteLine(" other => Equals(other),");
         }
         codeWriter.WriteLine("_ => throw new InvalidOperationException($\"Unknown type of union: {_type}\")");
@@ -46,7 +46,7 @@ public class UnionEqualsPart : GeneratorPart<UnionAttributePartInput>
         foreach (var type in types)
         {
             codeWriter.Write("public bool Equals(");
-            codeWriter.Write(type.ToDisplayString());
+            codeWriter.Write(type.Name);
             codeWriter.Write(" other) => _type == Kind.");
             codeWriter.Write(type.Name);
             codeWriter.Write(" && _");

@@ -26,13 +26,13 @@ public class UnionComparisonPart : GeneratorPart<UnionAttributePartInput>
             codeWriter.Write("public static bool operator ==(");
             codeWriter.Write(syntax.Identifier.Text);
             codeWriter.Write(" a, ");
-            codeWriter.Write(type.ToDisplayString());
+            codeWriter.Write(type.Name);
             codeWriter.WriteLine(" b) => a.Equals(b);");
 
             codeWriter.Write("public static bool operator !=(");
             codeWriter.Write(syntax.Identifier.Text);
             codeWriter.Write(" a, ");
-            codeWriter.Write(type.ToDisplayString());
+            codeWriter.Write(type.Name);
             codeWriter.WriteLine(" b) => !a.Equals(b);");
         }
     }

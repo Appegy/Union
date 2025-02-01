@@ -18,7 +18,7 @@ public class UnionPropertiesPart : GeneratorPart<UnionAttributePartInput>
             var fieldName = "_" + typeName.ToCamelCase();
 
             codeWriter.Write("public ");
-            codeWriter.Write(type.ToDisplayString());
+            codeWriter.Write(type.Name);
             codeWriter.Write(" ");
             codeWriter.WriteLine(typeName);
             codeWriter.WriteLine('{');
