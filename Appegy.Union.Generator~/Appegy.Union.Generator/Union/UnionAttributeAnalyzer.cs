@@ -15,6 +15,7 @@ public class UnionAttributeAnalyzer : DiagnosticAnalyzer
     public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics =>
         ImmutableArray.Create(
             NotPartial,
+            NestedNotPartial,
             NoTypesProvided,
             NotStruct,
             DuplicateUnionType);
@@ -36,6 +37,7 @@ public class UnionAttributeAnalyzer : DiagnosticAnalyzer
         }
 
         VerifyPartialModifier(context, attributeSyntax);
+        VerifyParentsPartial(context, attributeSyntax);
         VerifyArgumentsExistence(context, attributeSyntax);
         VerifyAllTypesAreStruct(context, attributeSyntax);
         VerifyNoDuplicate(context, attributeSyntax);
@@ -59,6 +61,27 @@ public class UnionAttributeAnalyzer : DiagnosticAnalyzer
             structDeclaration.Identifier.Text);
 
         context.ReportDiagnostic(diagnostic);
+    }
+
+    private static void VerifyParentsPartial(SyntaxNodeAnalysisContext context, AttributeSyntax attributeSyntax)
+    {
+        if (attributeSyntax.Parent?.Parent is not StructDeclarationSyntax structDeclaration)
+        {
+            return;
+        }
+
+        var parent = structDeclaration.Parent;
+        while (parent is TypeDeclarationSyntax parentType)
+        {
+            if (!parentType.Modifiers.Any(SyntaxKind.PartialKeyword))
+            {
+                var diagnostic = Diagnostic.Create(
+                    NestedNotPartial,
+                    parentType.Identifier.GetLocation());
+                context.ReportDiagnostic(diagnostic);
+            }
+            parent = parentType.Parent;
+        }
     }
 
     private void VerifyArgumentsExistence(SyntaxNodeAnalysisContext context, AttributeSyntax attributeSyntax)
@@ -94,7 +117,6 @@ public class UnionAttributeAnalyzer : DiagnosticAnalyzer
             var typeInfo = context.SemanticModel.GetTypeInfo(typeOfExpression.Type);
             if (typeInfo.Type?.TypeKind != TypeKind.Struct)
             {
-                // Type is not an interface
                 var diagnostic = Diagnostic.Create(
                     NotStruct,
                     typeOfExpression.Type.GetLocation(),
