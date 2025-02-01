@@ -166,11 +166,11 @@ using Appegy.Union.Cells.Variants;
 namespace Appegy.Union.Cells
 {
     [StructLayout(LayoutKind.Explicit, Pack = 1)]
-    public partial struct PuzzleCell
-        : System.IEquatable<PuzzleCell>
-        , System.IEquatable<VoidCell>
-        , System.IEquatable<EmptyCell>
-        , System.IEquatable<RegularCell>
+    partial struct PuzzleCell
+        : IEquatable<PuzzleCell>
+        , IEquatable<VoidCell>
+        , IEquatable<EmptyCell>
+        , IEquatable<RegularCell>
     {
         [Serializable]
         public enum Kind : byte
@@ -312,7 +312,7 @@ using Appegy.Union.Cells;
 
 namespace Appegy.Union.Cells
 {
-    public partial struct PuzzleCell :
+    partial struct PuzzleCell :
         IPuzzleCell,
         IMatchableCell,
         IMovableCell
