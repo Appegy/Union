@@ -4,8 +4,6 @@ namespace Appegy.Union.Generator;
 
 public class UnionTypeEnumPart : GeneratorPart<UnionAttributePartInput>
 {
-    public override string Description => "Enum for wrapped types";
-
     public override void Generate(IndentedTextWriter codeWriter, UnionAttributePartInput input)
     {
         var (_, types) = input;

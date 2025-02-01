@@ -4,8 +4,6 @@ namespace Appegy.Union.Generator;
 
 public class UnionEqualsPart : GeneratorPart<UnionAttributePartInput>
 {
-    public override string Description => "Override Equals";
-
     public override void Generate(IndentedTextWriter codeWriter, UnionAttributePartInput input)
     {
         var (syntax, types) = input;

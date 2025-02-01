@@ -5,8 +5,6 @@ namespace Appegy.Union.Generator;
 
 public class UnionConstructorsPart : GeneratorPart<UnionAttributePartInput>
 {
-    public override string Description => "Constructors";
-
     public override void Generate(IndentedTextWriter codeWriter, UnionAttributePartInput input)
     {
         var (syntax, types) = input;

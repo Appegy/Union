@@ -5,8 +5,6 @@ namespace Appegy.Union.Generator;
 
 public class UnionUsingsPart : GeneratorPart<UnionAttributePartInput>
 {
-    public override string Description => "Override .ToString";
-
     public override void Generate(IndentedTextWriter codeWriter, UnionAttributePartInput input)
     {
         var (_, types) = input;

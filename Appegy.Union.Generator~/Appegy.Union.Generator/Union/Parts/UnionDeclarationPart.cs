@@ -4,9 +4,6 @@ namespace Appegy.Union.Generator;
 
 public class UnionDeclarationPart : GeneratorPart<UnionAttributePartInput>
 {
-    public override string Description => "";
-    public virtual bool NewLineAtEnd => false;
-
     public override void Generate(IndentedTextWriter codeWriter, UnionAttributePartInput input)
     {
         var (syntax, types) = input;

@@ -4,8 +4,6 @@ namespace Appegy.Union.Generator;
 
 public class UnionComparisonPart : GeneratorPart<UnionAttributePartInput>
 {
-    public override string Description => "Override comparison operators";
-
     public override void Generate(IndentedTextWriter codeWriter, UnionAttributePartInput input)
     {
         var (syntax, types) = input;

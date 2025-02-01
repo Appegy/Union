@@ -8,7 +8,7 @@ public class ScopedGeneratorPart<T>(IReadOnlyList<GeneratorPart<T>> innerParts) 
 {
     protected readonly IReadOnlyList<GeneratorPart<T>> InnerParts = innerParts;
 
-    public override string Description => "";
+    public override bool NeedNewLine => false;
 
     public override void Generate(IndentedTextWriter codeWriter, T input)
     {

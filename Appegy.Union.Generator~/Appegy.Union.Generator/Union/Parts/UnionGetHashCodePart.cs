@@ -4,8 +4,6 @@ namespace Appegy.Union.Generator;
 
 public class UnionGetHashCodePart : GeneratorPart<UnionAttributePartInput>
 {
-    public override string Description => "Override .GetHashCode";
-
     public override void Generate(IndentedTextWriter codeWriter, UnionAttributePartInput input)
     {
         var (_, types) = input;

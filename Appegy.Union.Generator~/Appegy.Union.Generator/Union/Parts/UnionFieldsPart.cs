@@ -4,8 +4,6 @@ namespace Appegy.Union.Generator;
 
 public class UnionFieldsPart : GeneratorPart<UnionAttributePartInput>
 {
-    public override string Description => "Private fields";
-
     public override void Generate(IndentedTextWriter codeWriter, UnionAttributePartInput input)
     {
         var ( _, types) = input;

@@ -4,8 +4,6 @@ namespace Appegy.Union.Generator;
 
 public class UnionOperatorsPart : GeneratorPart<UnionAttributePartInput>
 {
-    public override string Description => "Override implicit operators";
-
     public override void Generate(IndentedTextWriter codeWriter, UnionAttributePartInput input)
     {
         var (syntax, types) = input;

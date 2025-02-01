@@ -12,23 +12,10 @@ internal static class CodeWriterExtensions
         for (var i = 0; i < parts.Count; i++)
         {
             var part = parts[i];
-            if (part.InRegion)
-            {
-                codeWriter.Write("#region ");
-                codeWriter.WriteLine(part.Description);
-                codeWriter.WriteLine();
-            }
 
             part.Generate(codeWriter, input);
 
-            if (part.InRegion)
-            {
-                codeWriter.WriteLine();
-                codeWriter.Write("#endregion ");
-                codeWriter.WriteLine(part.Description);
-            }
-
-            if (i < parts.Count - 1)
+            if (i < parts.Count - 1 && parts[i + 1].NeedNewLine)
             {
                 codeWriter.WriteLine();
             }

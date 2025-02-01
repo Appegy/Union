@@ -6,7 +6,7 @@ namespace Appegy.Union.Generator;
 
 public class UnionParentScopedPart(IReadOnlyList<GeneratorPart<UnionAttributePartInput>> innerParts) : ScopedGeneratorPart<UnionAttributePartInput>(innerParts)
 {
-    public override string Description => "";
+    public override bool NeedNewLine => true;
 
     public override void Generate(IndentedTextWriter codeWriter, UnionAttributePartInput input)
     {
