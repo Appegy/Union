@@ -1,11 +1,28 @@
-﻿using System.IO;
+﻿using System.CodeDom.Compiler;
+using System.Collections.Generic;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-namespace Appegy.Union.Generator.Utilities;
+namespace Appegy.Union.Generator;
 
 internal static class CodeWriterExtensions
 {
-    public static void AppendFullTypeName(this TextWriter codeWriter, TypeDeclarationSyntax classDeclarationSyntax)
+    public static void AppendParts<T>(this IndentedTextWriter codeWriter, IReadOnlyList<GeneratorPart<T>> parts, T input)
+        where T : struct
+    {
+        for (var i = 0; i < parts.Count; i++)
+        {
+            var part = parts[i];
+
+            part.Generate(codeWriter, input);
+
+            if (i < parts.Count - 1 && parts[i + 1].NeedNewLine)
+            {
+                codeWriter.WriteLine();
+            }
+        }
+    }
+
+    public static void AppendFullTypeName(this IndentedTextWriter codeWriter, TypeDeclarationSyntax classDeclarationSyntax)
     {
         var ancestorCount = 0;
         var parent = classDeclarationSyntax.Parent;

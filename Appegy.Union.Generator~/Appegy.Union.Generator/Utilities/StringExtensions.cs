@@ -1,4 +1,4 @@
-﻿namespace Appegy.Union.Generator.Utilities;
+﻿namespace Appegy.Union.Generator;
 
 public static class StringExtensions
 {
