@@ -28,7 +28,7 @@ internal static class CodeWriterExtensions
                 codeWriter.WriteLine(part.Description);
             }
 
-            if (i < parts.Length - 1)
+            if (i < parts.Length - 1 && part.NewLineAtEnd)
             {
                 codeWriter.WriteLine();
             }
