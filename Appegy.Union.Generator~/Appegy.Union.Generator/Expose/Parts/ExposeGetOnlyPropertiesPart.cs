@@ -46,7 +46,7 @@ public class ExposeGetOnlyPropertiesPart : GeneratorPart<ExposeInterfacePartInpu
             codeWriter.WriteLine(",");
         }
 
-        codeWriter.WriteLine("_ => throw new ArgumentOutOfRangeException(nameof(Type), $\"Unknown cell type: {_type}\")");
+        codeWriter.WriteLine("_ => throw new InvalidOperationException($\"Unknown type of union: {_type}\")");
         codeWriter.Indent--;
         codeWriter.WriteLine("};");
     }
