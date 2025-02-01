@@ -8,7 +8,7 @@ public class ExposeDeclarationPart : GeneratorPart<ExposeAttributePartInput>
     {
         var (syntax, _, interfaces) = input;
 
-        codeWriter.Write("public partial struct ");
+        codeWriter.Write("partial struct ");
         codeWriter.Write(syntax.Identifier.Text);
 
         codeWriter.WriteLine(" :");

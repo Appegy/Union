@@ -40,7 +40,7 @@ public class ExposeAttributeGenerator : IIncrementalGenerator
                     var syntax = (StructDeclarationSyntax)ctx.TargetNode;
                     var attribute = ctx.Attributes.First();
                     var interfaces = attribute.GetTypesFromConstructor(TypeKind.Interface);
-                    return (typeSyntax: syntax, interfaces);
+                    return (syntax, interfaces);
                 });
 
         var unionSources = context
@@ -50,18 +50,21 @@ public class ExposeAttributeGenerator : IIncrementalGenerator
                 predicate: static (syntax, _) => syntax is StructDeclarationSyntax,
                 transform: static (ctx, _) =>
                 {
+                    var syntax = (StructDeclarationSyntax)ctx.TargetNode;
                     var attribute = ctx.Attributes.First();
                     var types = attribute.GetTypesFromConstructor(TypeKind.Struct);
-                    return types;
+                    return (syntax, types);
                 });
 
         var sources = exposeSources.Combine(unionSources.Collect())
             .Select(static (input, _) =>
             {
-                var ((syntax, interfaces), typesArray) = input;
-                var types = ImmutableList.CreateBuilder<INamedTypeSymbol>();
-                types.AddRange(typesArray.SelectMany(c => c));
-                return (syntax, interfaces, types.ToImmutable());
+                var ((syntax, interfaces), unionArray) = input;
+                var unionTypesForThis = unionArray
+                    .Where(x => x.syntax.Span.Equals(syntax.Span) && x.syntax.SyntaxTree.FilePath == syntax.SyntaxTree.FilePath)
+                    .SelectMany(x => x.types)
+                    .ToImmutableList();
+                return (syntax, interfaces, unionTypesForThis);
             });
 
         context.RegisterSourceOutput(sources, static (ctx, input) =>

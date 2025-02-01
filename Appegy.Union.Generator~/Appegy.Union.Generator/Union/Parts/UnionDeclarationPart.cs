@@ -9,16 +9,16 @@ public class UnionDeclarationPart : GeneratorPart<UnionAttributePartInput>
         var (syntax, types) = input;
 
         codeWriter.WriteLine("[StructLayout(LayoutKind.Explicit, Pack = 1)]");
-        codeWriter.Write("public partial struct ");
+        codeWriter.Write("partial struct ");
         codeWriter.WriteLine(syntax.Identifier.Text);
 
-        codeWriter.Write("    : System.IEquatable<");
+        codeWriter.Write("    : IEquatable<");
         codeWriter.Write(syntax.Identifier.Text);
         codeWriter.WriteLine(">");
 
         foreach (var type in types)
         {
-            codeWriter.Write("    , System.IEquatable<");
+            codeWriter.Write("    , IEquatable<");
             codeWriter.Write(type.Name);
             codeWriter.WriteLine(">");
         }
