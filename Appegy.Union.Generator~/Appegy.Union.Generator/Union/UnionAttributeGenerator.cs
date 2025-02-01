@@ -17,20 +17,19 @@ public class UnionAttributeGenerator : IIncrementalGenerator
     private static ImmutableArray<GeneratorPart<UnionAttributePartInput>> Regions { get; } =
         ImmutableArray.Create<GeneratorPart<UnionAttributePartInput>>(
             new UnionUsingsRegion(),
-            new UnionParentStartRegion(),
-            new UnionDeclarationRegion(),
-            new UnionScopeStartRegion(),
-            new UnionTypeEnumRegion(),
-            new UnionFieldsRegion(),
-            new UnionPropertiesRegion(),
-            new UnionConstructorsRegion(),
-            new UnionToStringRegion(),
-            new UnionGetHashCodeRegion(),
-            new UnionEqualsRegion(),
-            new UnionOperatorsRegion(),
-            new UnionComparisonRegion(),
-            new UnionScopeEndRegion(),
-            new UnionParentEndRegion());
+            new UnionParentScopedPart(ImmutableArray.Create<GeneratorPart<UnionAttributePartInput>>(
+                new UnionDeclarationRegion(),
+                new ScopedGeneratorPart<UnionAttributePartInput>(ImmutableArray.Create<GeneratorPart<UnionAttributePartInput>>(
+                    new UnionTypeEnumRegion(),
+                    new UnionFieldsRegion(),
+                    new UnionPropertiesRegion(),
+                    new UnionConstructorsRegion(),
+                    new UnionToStringRegion(),
+                    new UnionGetHashCodeRegion(),
+                    new UnionEqualsRegion(),
+                    new UnionOperatorsRegion(),
+                    new UnionComparisonRegion()
+                )))));
 
     public void Initialize(IncrementalGeneratorInitializationContext context)
     {

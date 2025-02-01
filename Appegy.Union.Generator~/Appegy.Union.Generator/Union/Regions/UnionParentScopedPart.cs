@@ -1,12 +1,12 @@
 ﻿using System.CodeDom.Compiler;
+using System.Collections.Immutable;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Appegy.Union.Generator;
 
-public class UnionParentStartRegion : GeneratorPart<UnionAttributePartInput>
+public class UnionParentScopedPart(ImmutableArray<GeneratorPart<UnionAttributePartInput>> innerParts) : ScopedGeneratorPart<UnionAttributePartInput>(innerParts)
 {
     public override string Description => "";
-    public override bool NewLineAtEnd => false;
 
     public override void Generate(IndentedTextWriter codeWriter, UnionAttributePartInput input)
     {
@@ -16,8 +16,7 @@ public class UnionParentStartRegion : GeneratorPart<UnionAttributePartInput>
         {
             codeWriter.Write("namespace ");
             codeWriter.WriteLine(namespaceDeclaration.Name);
-            codeWriter.WriteLine('{');
-            codeWriter.Indent++;
+            base.Generate(codeWriter, input);
         }
     }
 }
