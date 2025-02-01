@@ -9,24 +9,37 @@ public class ExposePropertiesPart : GeneratorPart<ExposeInterfacePartInput>
     public override void Generate(IndentedTextWriter codeWriter, ExposeInterfacePartInput input)
     {
         var (_, types, members) = input;
-        for (var i = 0; i < members.Count; i++)
+        var needNewLine = false;
+        foreach (var member in members)
         {
-            switch (members[i])
-            {
-                case IPropertySymbol { IsIndexer: false, GetMethod: not null, SetMethod: null } propertySymbol:
-                    GenerateGetOnlyPropertyImplementation(codeWriter, propertySymbol, types);
-                    break;
-                case IPropertySymbol { IsIndexer: false, GetMethod: null, SetMethod: not null } propertySymbol:
-                    GenerateSetOnlyPropertyImplementation(codeWriter, propertySymbol, types);
-                    break;
-                case IPropertySymbol { IsIndexer: false, GetMethod: not null, SetMethod: not null } propertySymbol:
-                    GenerateGetSetPropertyImplementation(codeWriter, propertySymbol, types);
-                    break;
-            }
-            if (i < members.Count - 1)
+            if (needNewLine)
             {
                 codeWriter.WriteLine();
+                needNewLine = false;
             }
+
+            if (TryGenerateMember(codeWriter, member, types))
+            {
+                needNewLine = true;
+            }
+        }
+    }
+
+    private static bool TryGenerateMember(IndentedTextWriter codeWriter, ISymbol member, IReadOnlyList<INamedTypeSymbol> types)
+    {
+        switch (member)
+        {
+            case IPropertySymbol { IsIndexer: false, GetMethod: not null, SetMethod: null } propertySymbol:
+                GenerateGetOnlyPropertyImplementation(codeWriter, propertySymbol, types);
+                return true;
+            case IPropertySymbol { IsIndexer: false, GetMethod: null, SetMethod: not null } propertySymbol:
+                GenerateSetOnlyPropertyImplementation(codeWriter, propertySymbol, types);
+                return true;
+            case IPropertySymbol { IsIndexer: false, GetMethod: not null, SetMethod: not null } propertySymbol:
+                GenerateGetSetPropertyImplementation(codeWriter, propertySymbol, types);
+                return true;
+            default:
+                return false;
         }
     }
 
