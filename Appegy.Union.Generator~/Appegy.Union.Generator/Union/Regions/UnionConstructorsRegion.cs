@@ -3,16 +3,17 @@ using Microsoft.CodeAnalysis;
 
 namespace Appegy.Union.Generator;
 
-public class UnionConstructorsRegion : TypePartRegion<UnionAttributePartInput>
+public class UnionConstructorsRegion : GeneratorPart<UnionAttributePartInput>
 {
-    public override string Name => "Constructors";
+    public override string Description => "Constructors";
 
     public override void Generate(IndentedTextWriter codeWriter, UnionAttributePartInput input)
     {
         var (syntax, types) = input;
 
-        foreach (var type in types)
+        for (var i = 0; i < types.Count; i++)
         {
+            var type = types[i];
             var typeName = type.Name;
             var fieldName = "_" + typeName.ToCamelCase();
 
@@ -40,7 +41,11 @@ public class UnionConstructorsRegion : TypePartRegion<UnionAttributePartInput>
             codeWriter.WriteLine(" = value;");
             codeWriter.Indent--;
             codeWriter.WriteLine('}');
-            codeWriter.WriteLine();
+
+            if (i < types.Count - 1)
+            {
+                codeWriter.WriteLine();
+            }
         }
     }
 }

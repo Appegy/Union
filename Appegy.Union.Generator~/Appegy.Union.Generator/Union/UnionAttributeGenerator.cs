@@ -14,8 +14,8 @@ namespace Appegy.Union.Generator;
 [Generator]
 public class UnionAttributeGenerator : IIncrementalGenerator
 {
-    private static ImmutableArray<TypePartRegion<UnionAttributePartInput>> Regions { get; } =
-        ImmutableArray.Create<TypePartRegion<UnionAttributePartInput>>(
+    private static ImmutableArray<GeneratorPart<UnionAttributePartInput>> Regions { get; } =
+        ImmutableArray.Create<GeneratorPart<UnionAttributePartInput>>(
             new UnionTypeEnumRegion(),
             new UnionFieldsRegion(),
             new UnionPropertiesRegion(),
@@ -62,11 +62,7 @@ public class UnionAttributeGenerator : IIncrementalGenerator
             GenerateHeader(codeWriter, syntax);
             GenerateDeclaration(codeWriter, syntax, types);
 
-            var regionInput = new UnionAttributePartInput(syntax, types);
-            foreach (var region in Regions)
-            {
-                region.Generate(codeWriter, regionInput);
-            }
+            codeWriter.AppendParts(Regions, new UnionAttributePartInput(syntax, types));
 
             GenerateStructureClose(codeWriter, syntax);
 

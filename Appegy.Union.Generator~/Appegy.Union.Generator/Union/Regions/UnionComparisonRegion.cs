@@ -2,9 +2,9 @@
 
 namespace Appegy.Union.Generator;
 
-public class UnionComparisonRegion : TypePartRegion<UnionAttributePartInput>
+public class UnionComparisonRegion : GeneratorPart<UnionAttributePartInput>
 {
-    public override string Name => "Override .GetHashCode";
+    public override string Description => "Override comparison operators";
 
     public override void Generate(IndentedTextWriter codeWriter, UnionAttributePartInput input)
     {
@@ -21,7 +21,6 @@ public class UnionComparisonRegion : TypePartRegion<UnionAttributePartInput>
         codeWriter.Write(" a, ");
         codeWriter.Write(syntax.Identifier.Text);
         codeWriter.WriteLine(" b) => !a.Equals(b);");
-        codeWriter.WriteLine();
 
         for (var i = 0; i < types.Count; i++)
         {
@@ -37,10 +36,6 @@ public class UnionComparisonRegion : TypePartRegion<UnionAttributePartInput>
             codeWriter.Write(" a, ");
             codeWriter.Write(type.ToDisplayString());
             codeWriter.WriteLine(" b) => !a.Equals(b);");
-            if (i < types.Count - 1)
-            {
-                codeWriter.WriteLine();
-            }
         }
     }
 }

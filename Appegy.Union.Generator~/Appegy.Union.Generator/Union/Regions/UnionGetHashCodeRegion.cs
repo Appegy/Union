@@ -2,9 +2,9 @@
 
 namespace Appegy.Union.Generator;
 
-public class UnionGetHashCodeRegion : TypePartRegion<UnionAttributePartInput>
+public class UnionGetHashCodeRegion : GeneratorPart<UnionAttributePartInput>
 {
-    public override string Name => "Override .GetHashCode";
+    public override string Description => "Override .GetHashCode";
 
     public override void Generate(IndentedTextWriter codeWriter, UnionAttributePartInput input)
     {
@@ -24,6 +24,5 @@ public class UnionGetHashCodeRegion : TypePartRegion<UnionAttributePartInput>
         codeWriter.WriteLine("_ => throw new InvalidOperationException($\"Unknown type of union: {_type}\")");
         codeWriter.Indent--;
         codeWriter.WriteLine("};");
-        codeWriter.WriteLine();
     }
 }

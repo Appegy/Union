@@ -2,9 +2,9 @@
 
 namespace Appegy.Union.Generator;
 
-public class UnionEqualsRegion : TypePartRegion<UnionAttributePartInput>
+public class UnionEqualsRegion : GeneratorPart<UnionAttributePartInput>
 {
-    public override string Name => "Override .GetHashCode";
+    public override string Description => "Override Equals";
 
     public override void Generate(IndentedTextWriter codeWriter, UnionAttributePartInput input)
     {
@@ -55,7 +55,5 @@ public class UnionEqualsRegion : TypePartRegion<UnionAttributePartInput>
             codeWriter.Write(type.Name.ToCamelCase());
             codeWriter.WriteLine(".Equals(other);");
         }
-
-        codeWriter.WriteLine();
     }
 }

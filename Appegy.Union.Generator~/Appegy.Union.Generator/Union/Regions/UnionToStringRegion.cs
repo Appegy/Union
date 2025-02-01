@@ -2,9 +2,9 @@
 
 namespace Appegy.Union.Generator;
 
-public class UnionToStringRegion : TypePartRegion<UnionAttributePartInput>
+public class UnionToStringRegion : GeneratorPart<UnionAttributePartInput>
 {
-    public override string Name => "Override .ToString";
+    public override string Description => "Override .ToString";
 
     public override void Generate(IndentedTextWriter codeWriter, UnionAttributePartInput input)
     {
@@ -24,6 +24,5 @@ public class UnionToStringRegion : TypePartRegion<UnionAttributePartInput>
         codeWriter.WriteLine("_ => throw new InvalidOperationException($\"Unknown type of union: {_type}\")");
         codeWriter.Indent--;
         codeWriter.WriteLine("};");
-        codeWriter.WriteLine();
     }
 }

@@ -2,9 +2,9 @@
 
 namespace Appegy.Union.Generator;
 
-public class UnionFieldsRegion : TypePartRegion<UnionAttributePartInput>
+public class UnionFieldsRegion : GeneratorPart<UnionAttributePartInput>
 {
-    public override string Name => "Private fields";
+    public override string Description => "Private fields";
 
     public override void Generate(IndentedTextWriter codeWriter, UnionAttributePartInput input)
     {
@@ -12,7 +12,6 @@ public class UnionFieldsRegion : TypePartRegion<UnionAttributePartInput>
 
         codeWriter.WriteLine("[FieldOffset(0)]");
         codeWriter.WriteLine("private Kind _type;");
-        codeWriter.WriteLine();
 
         foreach (var type in types)
         {
@@ -23,6 +22,5 @@ public class UnionFieldsRegion : TypePartRegion<UnionAttributePartInput>
             codeWriter.Write(type.Name.ToCamelCase());
             codeWriter.WriteLine(";");
         }
-        codeWriter.WriteLine();
     }
 }

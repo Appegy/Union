@@ -2,9 +2,9 @@
 
 namespace Appegy.Union.Generator;
 
-public class UnionOperatorsRegion : TypePartRegion<UnionAttributePartInput>
+public class UnionOperatorsRegion : GeneratorPart<UnionAttributePartInput>
 {
-    public override string Name => "Override .GetHashCode";
+    public override string Description => "Override implicit operators";
 
     public override void Generate(IndentedTextWriter codeWriter, UnionAttributePartInput input)
     {
@@ -31,7 +31,6 @@ public class UnionOperatorsRegion : TypePartRegion<UnionAttributePartInput>
             codeWriter.Write(" other) => new ");
             codeWriter.Write(syntax.Identifier.Text);
             codeWriter.WriteLine("(other);");
-            codeWriter.WriteLine();
         }
     }
 }

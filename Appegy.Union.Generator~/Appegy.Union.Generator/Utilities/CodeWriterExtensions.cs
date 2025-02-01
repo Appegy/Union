@@ -1,11 +1,41 @@
-﻿using System.IO;
+﻿using System.CodeDom.Compiler;
+using System.Collections.Immutable;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Appegy.Union.Generator;
 
 internal static class CodeWriterExtensions
 {
-    public static void AppendFullTypeName(this TextWriter codeWriter, TypeDeclarationSyntax classDeclarationSyntax)
+    public static void AppendParts<T>(this IndentedTextWriter codeWriter, ImmutableArray<GeneratorPart<T>> parts, T input)
+        where T : struct
+    {
+        for (var i = 0; i < parts.Length; i++)
+        {
+            var part = parts[i];
+            if (part.InRegion)
+            {
+                codeWriter.Write("#region ");
+                codeWriter.WriteLine(part.Description);
+                codeWriter.WriteLine();
+            }
+
+            part.Generate(codeWriter, input);
+
+            if (part.InRegion)
+            {
+                codeWriter.WriteLine();
+                codeWriter.Write("#endregion ");
+                codeWriter.WriteLine(part.Description);
+            }
+
+            if (i < parts.Length - 1)
+            {
+                codeWriter.WriteLine();
+            }
+        }
+    }
+
+    public static void AppendFullTypeName(this IndentedTextWriter codeWriter, TypeDeclarationSyntax classDeclarationSyntax)
     {
         var ancestorCount = 0;
         var parent = classDeclarationSyntax.Parent;

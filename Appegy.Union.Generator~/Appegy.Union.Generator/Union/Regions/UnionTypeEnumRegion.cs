@@ -2,9 +2,9 @@
 
 namespace Appegy.Union.Generator;
 
-public class UnionTypeEnumRegion : TypePartRegion<UnionAttributePartInput>
+public class UnionTypeEnumRegion : GeneratorPart<UnionAttributePartInput>
 {
-    public override string Name => "Enum for wrapped types";
+    public override string Description => "Enum for wrapped types";
 
     public override void Generate(IndentedTextWriter codeWriter, UnionAttributePartInput input)
     {
@@ -21,6 +21,5 @@ public class UnionTypeEnumRegion : TypePartRegion<UnionAttributePartInput>
         }
         codeWriter.Indent--;
         codeWriter.WriteLine('}');
-        codeWriter.WriteLine();
     }
 }
