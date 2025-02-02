@@ -23,8 +23,9 @@ public class ExposeAttributeGenerator : IIncrementalGenerator
             new ScopedPart<ExposeAttributePartInput>([
                 new ExposeInterfacePart([
                     new ImplementProperties(),
-                    new ImplementIndexers()
-                ]),
+                    new ImplementIndexers(),
+                    new ImplementMethods()
+                ])
             ])
         ])
     ];

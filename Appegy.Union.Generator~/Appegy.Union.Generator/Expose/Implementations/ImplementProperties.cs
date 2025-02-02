@@ -25,11 +25,11 @@ public class ImplementProperties : ExposeInterfacePart.Implementation
         codeWriter.Indent++;
         if (propertySymbol.GetMethod != null)
         {
-            GenerateGetter(codeWriter, propertySymbol, types);
+            GenerateGetterBody(codeWriter, propertySymbol, types);
         }
         if (propertySymbol.SetMethod != null)
         {
-            GenerateSetter(codeWriter, propertySymbol, types);
+            GenerateSetterBody(codeWriter, propertySymbol, types);
         }
         codeWriter.Indent--;
         codeWriter.WriteLine("}");
@@ -43,7 +43,7 @@ public class ImplementProperties : ExposeInterfacePart.Implementation
         codeWriter.WriteLine(propertySymbol.Name);
     }
 
-    private static void GenerateGetter(IndentedTextWriter codeWriter, IPropertySymbol propertySymbol, IReadOnlyList<INamedTypeSymbol> types)
+    private static void GenerateGetterBody(IndentedTextWriter codeWriter, IPropertySymbol propertySymbol, IReadOnlyList<INamedTypeSymbol> types)
     {
         codeWriter.WriteLine("get");
         codeWriter.WriteLine("{");
@@ -68,7 +68,7 @@ public class ImplementProperties : ExposeInterfacePart.Implementation
         codeWriter.WriteLine("}");
     }
 
-    private static void GenerateSetter(IndentedTextWriter codeWriter, IPropertySymbol propertySymbol, IReadOnlyList<INamedTypeSymbol> types)
+    private static void GenerateSetterBody(IndentedTextWriter codeWriter, IPropertySymbol propertySymbol, IReadOnlyList<INamedTypeSymbol> types)
     {
         codeWriter.WriteLine("set");
         codeWriter.WriteLine("{");
