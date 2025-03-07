@@ -21,5 +21,4 @@
         <ProjectReference Include="..\Appegy.Union.Generator\Appegy.Union.Generator.csproj" />
     </ItemGroup>
 
-
 </Project>

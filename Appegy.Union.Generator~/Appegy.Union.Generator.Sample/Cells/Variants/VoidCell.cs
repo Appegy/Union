@@ -1,11 +1,26 @@
-﻿using Appegy.Union.Generator.Sample.Cells.Interfaces;
+﻿using System;
 
-namespace Appegy.Union.Generator.Sample.Cells.Variants
+namespace Appegy.Union.Generator.Sample.Cells
 {
-    public struct VoidCell : IPuzzleCell, IMovableCell, IMatchableCell
+    public struct VoidCell : IPuzzleCell, IMovableCell, IMatchableCell, IEquatable<VoidCell>
     {
         public short Id => -2;
         public bool Movable => false;
         public bool Matchable => false;
+
+        public bool Equals(VoidCell other)
+        {
+            return true;
+        }
+
+        public override bool Equals(object? boxed)
+        {
+            return boxed is VoidCell other && Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return Id;
+        }
     }
 }
