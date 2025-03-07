@@ -28,7 +28,7 @@ public class UnionAttributeGenerator : IIncrementalGenerator
                 new UnionGetHashCodePart(),
                 new UnionEqualsPart(),
                 new UnionOperatorsPart(),
-                new UnionComparisonPart()
+                new UnionComparisonPart(),
             ])
         ])
     ];
