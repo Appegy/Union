@@ -1,4 +1,4 @@
-﻿namespace Appegy.Union.Generator.Sample.Cells.Interfaces
+﻿namespace Appegy.Union.Generator.Sample.Cells
 {
     public interface IPuzzleCell
     {
