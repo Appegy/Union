@@ -24,7 +24,7 @@ public class ExposeAttributeGenerator : IIncrementalGenerator
                 new ExposeInterfacePart([
                     new ImplementProperties(),
                     new ImplementIndexers(),
-                    new ImplementMethods()
+                    new ImplementMethods(),
                 ])
             ])
         ])
