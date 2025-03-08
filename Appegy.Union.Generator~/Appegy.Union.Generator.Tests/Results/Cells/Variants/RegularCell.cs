@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Appegy.Union.Cells.Variants
+namespace Appegy.Union.Generator.Tests.Results
 {
     public struct RegularCell : IPuzzleCell, IMovableCell, IMatchableCell, IEquatable<RegularCell>
     {
@@ -18,7 +18,7 @@ namespace Appegy.Union.Cells.Variants
             return Id == other.Id;
         }
 
-        public override bool Equals(object boxed)
+        public override bool Equals(object? boxed)
         {
             return boxed is RegularCell other && Equals(other);
         }

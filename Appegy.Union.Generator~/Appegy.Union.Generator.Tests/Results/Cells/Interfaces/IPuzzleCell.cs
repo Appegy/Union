@@ -1,4 +1,4 @@
-﻿namespace Appegy.Union.Cells
+﻿namespace Appegy.Union.Generator.Tests.Results
 {
     public interface IPuzzleCell
     {
