@@ -1,4 +1,4 @@
-name: Build Sample Application
+name: Run .NET Unit Tests
 
 on: [pull_request, workflow_dispatch]
 
