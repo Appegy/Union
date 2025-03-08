@@ -1,6 +1,6 @@
-﻿using NUnit.Framework;
-using Appegy.Union.Cells;
+﻿using Appegy.Union.Cells;
 using Appegy.Union.Cells.Variants;
+using NUnit.Framework;
 
 namespace Appegy.Union
 {
