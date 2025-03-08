@@ -20,7 +20,7 @@ public abstract class ParentScopedPart<T>(IReadOnlyList<GeneratorPart<T>> innerP
 
         var ancestorCount = 0;
         var parent = syntax.Parent;
-        while (parent is NamespaceDeclarationSyntax or TypeDeclarationSyntax)
+        while (parent is BaseNamespaceDeclarationSyntax or TypeDeclarationSyntax)
         {
             ancestorCount++;
             parent = parent.Parent;
@@ -38,7 +38,7 @@ public abstract class ParentScopedPart<T>(IReadOnlyList<GeneratorPart<T>> innerP
         {
             switch (nodes[i])
             {
-                case NamespaceDeclarationSyntax ns:
+                case BaseNamespaceDeclarationSyntax ns:
                     codeWriter.Write("namespace ");
                     codeWriter.WriteLine(ns.Name.ToString());
                     codeWriter.WriteLine("{");
