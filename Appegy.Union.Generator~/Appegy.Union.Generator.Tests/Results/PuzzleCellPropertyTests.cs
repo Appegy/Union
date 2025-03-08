@@ -1,9 +1,7 @@
 ﻿using System;
 using NUnit.Framework;
-using Appegy.Union.Cells;
-using Appegy.Union.Cells.Variants;
 
-namespace Appegy.Union
+namespace Appegy.Union.Generator.Tests.Results
 {
     [TestFixture]
     public class PuzzleCellPropertyTests
