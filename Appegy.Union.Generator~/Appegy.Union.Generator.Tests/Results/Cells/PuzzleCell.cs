@@ -1,6 +1,4 @@
-﻿using Appegy.Union.Cells.Variants;
-
-namespace Appegy.Union.Cells
+﻿namespace Appegy.Union.Generator.Tests.Results
 {
     [Union(typeof(VoidCell), typeof(EmptyCell), typeof(RegularCell))]
     [Expose(typeof(IPuzzleCell), typeof(IMatchableCell), typeof(IMovableCell))]

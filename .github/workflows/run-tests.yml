@@ -1,4 +1,4 @@
-name: Build Sample Application
+name: Run .NET Unit Tests
 
 on: [pull_request, workflow_dispatch]
 
@@ -6,20 +6,21 @@ jobs:
   test:
     name: Run Unit Tests
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-    steps:      
+
+    steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Run unit tests
-        uses: game-ci/unity-test-runner@v4
-        id: tests
-        env:
-          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
-          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
-          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
         with:
-          projectPath: ".Union"
-          unityVersion: "auto"
-          testMode: "EditMode"
+          dotnet-version: '9.0.x'
+
+      - name: Restore dependencies
+        run: dotnet restore Appegy.Union.Generator~/Appegy.Union.Generator.slnx
+
+      - name: Build solution
+        run: dotnet build Appegy.Union.Generator~/Appegy.Union.Generator.slnx --configuration Release --no-restore
+
+      - name: Run tests
+        run: dotnet test Appegy.Union.Generator~/Appegy.Union.Generator.Tests/Appegy.Union.Generator.Tests.csproj --configuration Release --no-build --verbosity normal

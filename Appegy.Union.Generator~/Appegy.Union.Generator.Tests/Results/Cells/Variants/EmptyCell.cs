@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Appegy.Union.Cells.Variants
+namespace Appegy.Union.Generator.Tests.Results
 {
     public struct EmptyCell : IPuzzleCell, IMovableCell, IMatchableCell, IEquatable<EmptyCell>
     {
@@ -13,7 +13,7 @@ namespace Appegy.Union.Cells.Variants
             return true;
         }
 
-        public override bool Equals(object boxed)
+        public override bool Equals(object? boxed)
         {
             return boxed is EmptyCell other && Equals(other);
         }
