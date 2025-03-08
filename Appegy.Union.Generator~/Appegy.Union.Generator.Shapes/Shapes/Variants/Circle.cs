@@ -1,4 +1,6 @@
-﻿namespace Appegy.Union.Generator.Shapes;
+﻿using System;
+
+namespace Appegy.Union.Generator.Shapes;
 
 public readonly struct Circle(double radius) : IShape, IEquatable<Circle>
 {

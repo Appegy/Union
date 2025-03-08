@@ -1,5 +1,5 @@
 ﻿<Solution>
-  <Project Path="Appegy.Union.Generator.Sample\Appegy.Union.Generator.Sample.csproj" Type="Classic C#" />
+  <Project Path="Appegy.Union.Generator.Diagnostic\Appegy.Union.Generator.Diagnostic.csproj" Type="Classic C#" />
   <Project Path="Appegy.Union.Generator.Shapes\Appegy.Union.Generator.Shapes.csproj" Type="Classic C#" />
   <Project Path="Appegy.Union.Generator.Tests\Appegy.Union.Generator.Tests.csproj" Type="Classic C#" />
   <Project Path="Appegy.Union.Generator\Appegy.Union.Generator.csproj" Type="Classic C#" />
