@@ -1,7 +1,6 @@
-﻿namespace Appegy.Union.Generator.Tests.Results
+﻿namespace Appegy.Union.Generator.Tests.Results;
+
+public interface IPuzzleCell
 {
-    public interface IPuzzleCell
-    {
-        public short Id { get; }
-    }
+    public short Id { get; }
 }

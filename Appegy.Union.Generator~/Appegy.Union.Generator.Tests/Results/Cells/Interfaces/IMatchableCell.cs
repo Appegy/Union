@@ -1,7 +1,6 @@
-namespace Appegy.Union.Generator.Tests.Results
+namespace Appegy.Union.Generator.Tests.Results;
+
+public interface IMatchableCell
 {
-    public interface IMatchableCell
-    {
-        public bool Matchable { get; }
-    }
+    public bool Matchable { get; }
 }

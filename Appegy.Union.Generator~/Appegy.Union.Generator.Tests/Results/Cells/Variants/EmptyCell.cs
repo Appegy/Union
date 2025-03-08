@@ -1,26 +1,25 @@
 ﻿using System;
 
-namespace Appegy.Union.Generator.Tests.Results
+namespace Appegy.Union.Generator.Tests.Results;
+
+public readonly struct EmptyCell : IPuzzleCell, IMovableCell, IMatchableCell, IEquatable<EmptyCell>
 {
-    public struct EmptyCell : IPuzzleCell, IMovableCell, IMatchableCell, IEquatable<EmptyCell>
+    public short Id => -1;
+    public bool Movable => false;
+    public bool Matchable => false;
+
+    public bool Equals(EmptyCell other)
     {
-        public short Id => -1;
-        public bool Movable => false;
-        public bool Matchable => false;
+        return true;
+    }
 
-        public bool Equals(EmptyCell other)
-        {
-            return true;
-        }
+    public override bool Equals(object? boxed)
+    {
+        return boxed is EmptyCell other && Equals(other);
+    }
 
-        public override bool Equals(object? boxed)
-        {
-            return boxed is EmptyCell other && Equals(other);
-        }
-
-        public override int GetHashCode()
-        {
-            return Id;
-        }
+    public override int GetHashCode()
+    {
+        return Id;
     }
 }

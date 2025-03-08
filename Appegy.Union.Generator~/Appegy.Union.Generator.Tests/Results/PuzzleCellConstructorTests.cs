@@ -1,47 +1,46 @@
 ﻿using NUnit.Framework;
 
-namespace Appegy.Union.Generator.Tests.Results
+namespace Appegy.Union.Generator.Tests.Results;
+
+[TestFixture]
+public class PuzzleCellConstructorTests
 {
-    [TestFixture]
-    public class PuzzleCellConstructorTests
+    [Test]
+    public void WhenCreatingPuzzleCellWithVoidCell_ThenTypeIsVoidCell()
     {
-        [Test]
-        public void WhenCreatingPuzzleCellWithVoidCell_ThenTypeIsVoidCell()
-        {
-            // Arrange
-            var voidCell = new VoidCell();
+        // Arrange
+        var voidCell = new VoidCell();
 
-            // Act
-            var puzzleCell = new PuzzleCell(voidCell);
+        // Act
+        var puzzleCell = new PuzzleCell(voidCell);
 
-            // Assert
-            Assert.AreEqual(PuzzleCell.Kind.VoidCell, puzzleCell.Type);
-        }
+        // Assert
+        Assert.AreEqual(PuzzleCell.Kind.VoidCell, puzzleCell.Type);
+    }
 
-        [Test]
-        public void WhenCreatingPuzzleCellWithEmptyCell_ThenTypeIsEmptyCell()
-        {
-            // Arrange
-            var emptyCell = new EmptyCell();
+    [Test]
+    public void WhenCreatingPuzzleCellWithEmptyCell_ThenTypeIsEmptyCell()
+    {
+        // Arrange
+        var emptyCell = new EmptyCell();
 
-            // Act
-            var puzzleCell = new PuzzleCell(emptyCell);
+        // Act
+        var puzzleCell = new PuzzleCell(emptyCell);
 
-            // Assert
-            Assert.AreEqual(PuzzleCell.Kind.EmptyCell, puzzleCell.Type);
-        }
+        // Assert
+        Assert.AreEqual(PuzzleCell.Kind.EmptyCell, puzzleCell.Type);
+    }
 
-        [Test]
-        public void WhenCreatingPuzzleCellWithRegularCell_ThenTypeIsRegularCell()
-        {
-            // Arrange
-            var regularCell = new RegularCell();
+    [Test]
+    public void WhenCreatingPuzzleCellWithRegularCell_ThenTypeIsRegularCell()
+    {
+        // Arrange
+        var regularCell = new RegularCell();
 
-            // Act
-            var puzzleCell = new PuzzleCell(regularCell);
+        // Act
+        var puzzleCell = new PuzzleCell(regularCell);
 
-            // Assert
-            Assert.AreEqual(PuzzleCell.Kind.RegularCell, puzzleCell.Type);
-        }
+        // Assert
+        Assert.AreEqual(PuzzleCell.Kind.RegularCell, puzzleCell.Type);
     }
 }

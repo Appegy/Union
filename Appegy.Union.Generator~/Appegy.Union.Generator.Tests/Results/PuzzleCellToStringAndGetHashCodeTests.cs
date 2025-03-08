@@ -1,92 +1,91 @@
 ﻿using NUnit.Framework;
 
-namespace Appegy.Union.Generator.Tests.Results
+namespace Appegy.Union.Generator.Tests.Results;
+
+[TestFixture]
+public class PuzzleCellToStringAndGetHashCodeTests
 {
-    [TestFixture]
-    public class PuzzleCellToStringAndGetHashCodeTests
+    [Test]
+    public void WhenCallingToString_AndTypeIsVoidCell_ThenReturnsVoidCellToString()
     {
-        [Test]
-        public void WhenCallingToString_AndTypeIsVoidCell_ThenReturnsVoidCellToString()
-        {
-            // Arrange
-            var voidCell = new VoidCell();
-            var puzzleCell = new PuzzleCell(voidCell);
+        // Arrange
+        var voidCell = new VoidCell();
+        var puzzleCell = new PuzzleCell(voidCell);
 
-            // Act
-            var result = puzzleCell.ToString();
+        // Act
+        var result = puzzleCell.ToString();
 
-            // Assert
-            Assert.AreEqual(voidCell.ToString(), result);
-        }
+        // Assert
+        Assert.AreEqual(voidCell.ToString(), result);
+    }
 
-        [Test]
-        public void WhenCallingToString_AndTypeIsEmptyCell_ThenReturnsEmptyCellToString()
-        {
-            // Arrange
-            var emptyCell = new EmptyCell();
-            var puzzleCell = new PuzzleCell(emptyCell);
+    [Test]
+    public void WhenCallingToString_AndTypeIsEmptyCell_ThenReturnsEmptyCellToString()
+    {
+        // Arrange
+        var emptyCell = new EmptyCell();
+        var puzzleCell = new PuzzleCell(emptyCell);
 
-            // Act
-            var result = puzzleCell.ToString();
+        // Act
+        var result = puzzleCell.ToString();
 
-            // Assert
-            Assert.AreEqual(emptyCell.ToString(), result);
-        }
+        // Assert
+        Assert.AreEqual(emptyCell.ToString(), result);
+    }
 
-        [Test]
-        public void WhenCallingToString_AndTypeIsRegularCell_ThenReturnsRegularCellToString()
-        {
-            // Arrange
-            var regularCell = new RegularCell(1); // Unique ID
-            var puzzleCell = new PuzzleCell(regularCell);
+    [Test]
+    public void WhenCallingToString_AndTypeIsRegularCell_ThenReturnsRegularCellToString()
+    {
+        // Arrange
+        var regularCell = new RegularCell(1); // Unique ID
+        var puzzleCell = new PuzzleCell(regularCell);
 
-            // Act
-            var result = puzzleCell.ToString();
+        // Act
+        var result = puzzleCell.ToString();
 
-            // Assert
-            Assert.AreEqual(regularCell.ToString(), result);
-        }
+        // Assert
+        Assert.AreEqual(regularCell.ToString(), result);
+    }
 
-        [Test]
-        public void WhenCallingGetHashCode_AndTypeIsVoidCell_ThenReturnsVoidCellGetHashCode()
-        {
-            // Arrange
-            var voidCell = new VoidCell();
-            var puzzleCell = new PuzzleCell(voidCell);
+    [Test]
+    public void WhenCallingGetHashCode_AndTypeIsVoidCell_ThenReturnsVoidCellGetHashCode()
+    {
+        // Arrange
+        var voidCell = new VoidCell();
+        var puzzleCell = new PuzzleCell(voidCell);
 
-            // Act
-            var result = puzzleCell.GetHashCode();
+        // Act
+        var result = puzzleCell.GetHashCode();
 
-            // Assert
-            Assert.AreEqual(voidCell.GetHashCode(), result);
-        }
+        // Assert
+        Assert.AreEqual(voidCell.GetHashCode(), result);
+    }
 
-        [Test]
-        public void WhenCallingGetHashCode_AndTypeIsEmptyCell_ThenReturnsEmptyCellGetHashCode()
-        {
-            // Arrange
-            var emptyCell = new EmptyCell();
-            var puzzleCell = new PuzzleCell(emptyCell);
+    [Test]
+    public void WhenCallingGetHashCode_AndTypeIsEmptyCell_ThenReturnsEmptyCellGetHashCode()
+    {
+        // Arrange
+        var emptyCell = new EmptyCell();
+        var puzzleCell = new PuzzleCell(emptyCell);
 
-            // Act
-            var result = puzzleCell.GetHashCode();
+        // Act
+        var result = puzzleCell.GetHashCode();
 
-            // Assert
-            Assert.AreEqual(emptyCell.GetHashCode(), result);
-        }
+        // Assert
+        Assert.AreEqual(emptyCell.GetHashCode(), result);
+    }
 
-        [Test]
-        public void WhenCallingGetHashCode_AndTypeIsRegularCell_ThenReturnsRegularCellGetHashCode()
-        {
-            // Arrange
-            var regularCell = new RegularCell(1); // Unique ID
-            var puzzleCell = new PuzzleCell(regularCell);
+    [Test]
+    public void WhenCallingGetHashCode_AndTypeIsRegularCell_ThenReturnsRegularCellGetHashCode()
+    {
+        // Arrange
+        var regularCell = new RegularCell(1); // Unique ID
+        var puzzleCell = new PuzzleCell(regularCell);
 
-            // Act
-            var result = puzzleCell.GetHashCode();
+        // Act
+        var result = puzzleCell.GetHashCode();
 
-            // Assert
-            Assert.AreEqual(regularCell.GetHashCode(), result);
-        }
+        // Assert
+        Assert.AreEqual(regularCell.GetHashCode(), result);
     }
 }

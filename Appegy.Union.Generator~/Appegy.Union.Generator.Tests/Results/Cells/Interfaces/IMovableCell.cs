@@ -1,7 +1,6 @@
-namespace Appegy.Union.Generator.Tests.Results
+namespace Appegy.Union.Generator.Tests.Results;
+
+public interface IMovableCell
 {
-    public interface IMovableCell
-    {
-        public bool Movable { get; }
-    }
+    public bool Movable { get; }
 }
