@@ -7,7 +7,7 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Diagnostics;
 
-namespace Appegy.Union.Generator.Sample;
+namespace Appegy.Union.Generator.Diagnostic;
 
 public static class Program
 {

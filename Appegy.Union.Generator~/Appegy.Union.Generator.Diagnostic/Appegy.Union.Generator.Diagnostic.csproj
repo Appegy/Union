@@ -8,12 +8,16 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Appegy.Union.Generator\Appegy.Union.Generator.csproj" OutputItemType="Analyzer"/>
+        <ProjectReference Include="..\Appegy.Union.Generator\Appegy.Union.Generator.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
-        <EmbeddedResource Include="Attributes\*.cs"/>
-        <EmbeddedResource Include="Cells\**\*.cs"/>
+        <EmbeddedResource Include="..\Appegy.Union.Generator.Shapes\Shapes\**\*.cs">
+            <Visible>false</Visible>
+        </EmbeddedResource>
+        <EmbeddedResource Include="..\Appegy.Union.Generator.Shapes\Attributes\**\*.cs">
+            <Visible>false</Visible>
+        </EmbeddedResource>
     </ItemGroup>
 
     <ItemGroup>

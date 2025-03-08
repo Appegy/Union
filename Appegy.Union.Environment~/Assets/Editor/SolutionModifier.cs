@@ -10,8 +10,9 @@ namespace Appegy.Union.Sample
         private const string SolutionFolderTypeGuid = "{2150E333-8FDC-42A3-9474-1A3956D46DE8}";
         private const string CSharpProjectTypeGuid = "{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}";
         private const string GeneratorProjectGuid = "{D3559EE9-46DE-454D-82C2-1DB0D0FF0ADA}";
-        private const string GeneratorSampleProjectGuid = "{7317372A-748F-4D5B-9086-9F82923D25CE}";
+        private const string GeneratorDiagnosticProjectGuid = "{7317372A-748F-4D5B-9086-9F82923D25CE}";
         private const string GeneratorTestsProjectGuid = "{DCA34C60-E33A-4BC4-865F-626306023A01}";
+        private const string GeneratorShapesProjectGuid = "{B1234567-89AB-4CDE-9012-3456789ABCDE}";
 
         public static string OnGeneratedSlnSolution(string path, string content)
         {
@@ -22,15 +23,17 @@ namespace Appegy.Union.Sample
 
             AddFolder(sb, "ExternalProjects", ExternalProjectsFolderGuid);
 
-            AddProjectToFolder(sb, "Appegy.Union.Generator", GeneratorProjectGuid, "..\\\\Appegy.Union.Generator~\\\\Appegy.Union.Generator\\\\Appegy.Union.Generator.csproj");
-            AddProjectToFolder(sb, "Appegy.Union.Generator.Sample", GeneratorSampleProjectGuid, "..\\\\Appegy.Union.Generator~\\\\Appegy.Union.Generator.Sample\\\\Appegy.Union.Generator.Sample.csproj");
-            AddProjectToFolder(sb, "Appegy.Union.Generator.Tests", GeneratorTestsProjectGuid, "..\\\\Appegy.Union.Generator~\\\\Appegy.Union.Generator.Tests\\\\Appegy.Union.Generator.Tests.csproj");
+            AddProjectToFolder(sb, "Appegy.Union.Generator", GeneratorProjectGuid, "..\\Appegy.Union.Generator~\\Appegy.Union.Generator\\Appegy.Union.Generator.csproj");
+            AddProjectToFolder(sb, "Appegy.Union.Generator.Diagnostic", GeneratorDiagnosticProjectGuid, "..\\Appegy.Union.Generator~\\Appegy.Union.Generator.Diagnostic\\Appegy.Union.Generator.Diagnostic.csproj");
+            AddProjectToFolder(sb, "Appegy.Union.Generator.Tests", GeneratorTestsProjectGuid, "..\\Appegy.Union.Generator~\\Appegy.Union.Generator.Tests\\Appegy.Union.Generator.Tests.csproj");
+            AddProjectToFolder(sb, "Appegy.Union.Generator.Shapes", GeneratorShapesProjectGuid, "..\\Appegy.Union.Generator~\\Appegy.Union.Generator.Shapes\\Appegy.Union.Generator.Shapes.csproj");
 
             AddProjectConfiguration(sb, GeneratorProjectGuid);
-            AddProjectConfiguration(sb, GeneratorSampleProjectGuid);
+            AddProjectConfiguration(sb, GeneratorDiagnosticProjectGuid);
             AddProjectConfiguration(sb, GeneratorTestsProjectGuid);
+            AddProjectConfiguration(sb, GeneratorShapesProjectGuid);
 
-            AddNestedProjectsSection(sb, ExternalProjectsFolderGuid, GeneratorProjectGuid, GeneratorSampleProjectGuid, GeneratorTestsProjectGuid);
+            AddNestedProjectsSection(sb, ExternalProjectsFolderGuid, GeneratorProjectGuid, GeneratorDiagnosticProjectGuid, GeneratorTestsProjectGuid, GeneratorShapesProjectGuid);
 
             return sb.ToString();
         }

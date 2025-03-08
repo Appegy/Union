@@ -8,6 +8,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\Appegy.Union.Generator.Shapes\Appegy.Union.Generator.Shapes.csproj" />
         <ProjectReference Include="..\Appegy.Union.Generator\Appegy.Union.Generator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false"/>
     </ItemGroup>
 
@@ -15,11 +16,6 @@
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.13.0"/>
         <PackageReference Include="NUnit" Version="3.13.3"/>
         <PackageReference Include="NUnit3TestAdapter" Version="4.5.0"/>
-    </ItemGroup>
-
-    <ItemGroup>
-        <EmbeddedResource Include="Results\Attributes\ExposeAttribute.cs"/>
-        <EmbeddedResource Include="Results\Attributes\UnionAttribute.cs"/>
     </ItemGroup>
 
 </Project>
