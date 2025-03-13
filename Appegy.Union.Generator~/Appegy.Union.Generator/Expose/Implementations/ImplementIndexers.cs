@@ -66,8 +66,8 @@ public class ImplementIndexers : ExposeInterfacePart.Implementation
         {
             codeWriter.Write("case Kind.");
             codeWriter.Write(type.Name);
-            codeWriter.Write(": return _");
-            codeWriter.Write(type.Name.ToCamelCase());
+            codeWriter.Write(": return ");
+            codeWriter.WriteFieldName(type);
             codeWriter.Write("[");
             GenerateIndexerArguments(codeWriter, propertySymbol);
             codeWriter.WriteLine("];");
@@ -91,8 +91,8 @@ public class ImplementIndexers : ExposeInterfacePart.Implementation
         {
             codeWriter.Write("case Kind.");
             codeWriter.Write(type.Name);
-            codeWriter.Write(": _");
-            codeWriter.Write(type.Name.ToCamelCase());
+            codeWriter.Write(": ");
+            codeWriter.WriteFieldName(type);
             codeWriter.Write("[");
             GenerateIndexerArguments(codeWriter, propertySymbol);
             codeWriter.Write("] = value; break;");

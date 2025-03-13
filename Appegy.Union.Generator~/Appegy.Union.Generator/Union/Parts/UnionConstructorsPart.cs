@@ -13,7 +13,6 @@ public class UnionConstructorsPart : GeneratorPart<UnionAttributePartInput>
         {
             var type = types[i];
             var typeName = type.Name;
-            var fieldName = "_" + typeName.ToCamelCase();
 
             codeWriter.Write("public ");
             codeWriter.Write(syntax.Identifier.Text);
@@ -31,11 +30,10 @@ public class UnionConstructorsPart : GeneratorPart<UnionAttributePartInput>
                 {
                     continue;
                 }
-                codeWriter.Write("_");
-                codeWriter.Write(otherType.Name.ToCamelCase());
+                codeWriter.WriteFieldName(otherType);
                 codeWriter.WriteLine(" = default;");
             }
-            codeWriter.Write(fieldName);
+            codeWriter.WriteFieldName(type);
             codeWriter.WriteLine(" = value;");
             codeWriter.Indent--;
             codeWriter.WriteLine('}');
