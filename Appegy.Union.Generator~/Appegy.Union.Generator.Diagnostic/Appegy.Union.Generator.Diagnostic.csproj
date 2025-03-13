@@ -15,9 +15,6 @@
         <EmbeddedResource Include="..\Appegy.Union.Generator.Shapes\Shapes\**\*.cs">
             <Visible>false</Visible>
         </EmbeddedResource>
-        <EmbeddedResource Include="..\Appegy.Union.Generator.Shapes\Attributes\**\*.cs">
-            <Visible>false</Visible>
-        </EmbeddedResource>
     </ItemGroup>
 
     <ItemGroup>
