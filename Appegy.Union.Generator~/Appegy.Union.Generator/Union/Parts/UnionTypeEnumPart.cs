@@ -8,8 +8,8 @@ public class UnionTypeEnumPart : GeneratorPart<UnionAttributePartInput>
     {
         var (_, types) = input;
 
-        codeWriter.WriteLine("[Serializable]");
-        codeWriter.WriteLine("public enum Kind : byte");
+        codeWriter.WriteLine("[global::System.Serializable]");
+        codeWriter.WriteLine("public enum Kind : global::System.Byte");
         codeWriter.WriteLine('{');
         codeWriter.Indent++;
         foreach (var type in types)
