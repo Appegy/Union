@@ -1,5 +1,4 @@
 ﻿using System.CodeDom.Compiler;
-using SymbolDisplayFormat = Microsoft.CodeAnalysis.SymbolDisplayFormat;
 
 namespace Appegy.Union.Generator;
 
@@ -7,7 +6,7 @@ public class UnionFieldsPart : GeneratorPart<UnionAttributePartInput>
 {
     public override void Generate(IndentedTextWriter codeWriter, UnionAttributePartInput input)
     {
-        var ( _, types) = input;
+        var (_, types) = input;
 
         codeWriter.WriteLine("[global::System.Runtime.InteropServices.FieldOffset(0)]");
         codeWriter.WriteLine("private Kind _type;");
@@ -16,9 +15,9 @@ public class UnionFieldsPart : GeneratorPart<UnionAttributePartInput>
         {
             codeWriter.WriteLine("[global::System.Runtime.InteropServices.FieldOffset(1)]");
             codeWriter.Write("private ");
-            codeWriter.Write(type.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat));
+            codeWriter.Write(type.FullName);
             codeWriter.Write(' ');
-            codeWriter.WriteFieldName(type);
+            codeWriter.Write(type.FieldName);
             codeWriter.WriteLine(';');
         }
     }

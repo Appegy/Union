@@ -19,7 +19,7 @@ public class UnionDeclarationPart : GeneratorPart<UnionAttributePartInput>
         foreach (var type in types)
         {
             codeWriter.Write("    , global::System.IEquatable<");
-            codeWriter.Write(type.Name);
+            codeWriter.Write(type.FullName);
             codeWriter.WriteLine(">");
         }
     }
