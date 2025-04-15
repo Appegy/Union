@@ -48,7 +48,8 @@ public class UnionAttributeGenerator : IIncrementalGenerator
                 {
                     var syntax = (StructDeclarationSyntax)ctx.TargetNode;
                     var attribute = ctx.Attributes.First();
-                    var types = attribute.GetTypesFromConstructor(TypeKind.Struct)
+                    var types = attribute
+                        .GetTypesFromConstructor(TypeKind.Struct)
                         .Select(c => new UnionTypeInfo(c))
                         .ToImmutableList();
                     return (syntax, types);
