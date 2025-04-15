@@ -32,8 +32,8 @@ public class UnionEqualsPart : GeneratorPart<UnionAttributePartInput>
         {
             codeWriter.Write("Kind.");
             codeWriter.Write(type.Name);
-            codeWriter.Write(" => _");
-            codeWriter.Write(type.Name.ToCamelCase());
+            codeWriter.Write(" => ");
+            codeWriter.WriteFieldName(type);
             codeWriter.Write(".Equals(other.");
             codeWriter.Write(type.Name);
             codeWriter.WriteLine("),");
@@ -49,8 +49,8 @@ public class UnionEqualsPart : GeneratorPart<UnionAttributePartInput>
             codeWriter.Write(type.Name);
             codeWriter.Write(" other) => _type == Kind.");
             codeWriter.Write(type.Name);
-            codeWriter.Write(" && _");
-            codeWriter.Write(type.Name.ToCamelCase());
+            codeWriter.Write(" && ");
+            codeWriter.WriteFieldName(type);
             codeWriter.WriteLine(".Equals(other);");
         }
     }

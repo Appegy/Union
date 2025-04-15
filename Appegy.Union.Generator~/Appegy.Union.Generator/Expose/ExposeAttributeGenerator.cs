@@ -8,6 +8,7 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Text;
+using static Appegy.Union.Generator.AttributesSource;
 using static Appegy.Union.Generator.AttributesNames;
 
 namespace Appegy.Union.Generator;
@@ -17,6 +18,7 @@ public class ExposeAttributeGenerator : IIncrementalGenerator
 {
     private static IReadOnlyList<GeneratorPart<ExposeAttributePartInput>> Parts { get; } =
     [
+        new HeaderPart<ExposeAttributePartInput>(),
         new ExposeUsingsPart(),
         new ExposeParentScopedPart([
             new ExposeDeclarationPart(),
@@ -32,6 +34,8 @@ public class ExposeAttributeGenerator : IIncrementalGenerator
 
     public void Initialize(IncrementalGeneratorInitializationContext context)
     {
+        context.RegisterPostInitializationOutput(c => c.AddSource("ExposeAttribute.g.cs", ExposeAttribute));
+
         var exposeSources = context
             .SyntaxProvider
             .ForAttributeWithMetadataName(

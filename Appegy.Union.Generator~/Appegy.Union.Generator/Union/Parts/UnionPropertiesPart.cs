@@ -15,7 +15,6 @@ public class UnionPropertiesPart : GeneratorPart<UnionAttributePartInput>
         {
             var type = types[i];
             var typeName = type.Name;
-            var fieldName = "_" + typeName.ToCamelCase();
 
             codeWriter.Write("public ");
             codeWriter.Write(type.Name);
@@ -28,7 +27,7 @@ public class UnionPropertiesPart : GeneratorPart<UnionAttributePartInput>
             codeWriter.Write(" ? throw new Exception($\"Can't get ");
             codeWriter.Write(typeName);
             codeWriter.Write(" because current type is '{Type}'.\") : ");
-            codeWriter.Write(fieldName);
+            codeWriter.WriteFieldName(type);
             codeWriter.WriteLine(";");
             codeWriter.WriteLine("set");
             codeWriter.WriteLine('{');
@@ -36,7 +35,7 @@ public class UnionPropertiesPart : GeneratorPart<UnionAttributePartInput>
             codeWriter.Write("_type = Kind.");
             codeWriter.Write(typeName);
             codeWriter.WriteLine(";");
-            codeWriter.Write(fieldName);
+            codeWriter.WriteFieldName(type);
             codeWriter.WriteLine(" = value;");
             codeWriter.Indent--;
             codeWriter.WriteLine('}');

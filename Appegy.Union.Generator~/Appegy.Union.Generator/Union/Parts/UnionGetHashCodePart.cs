@@ -15,8 +15,8 @@ public class UnionGetHashCodePart : GeneratorPart<UnionAttributePartInput>
         {
             codeWriter.Write("Kind.");
             codeWriter.Write(type.Name);
-            codeWriter.Write(" => _");
-            codeWriter.Write(type.Name.ToCamelCase());
+            codeWriter.Write(" => ");
+            codeWriter.WriteFieldName(type);
             codeWriter.WriteLine(".GetHashCode(),");
         }
         codeWriter.WriteLine("_ => throw new InvalidOperationException($\"Unknown type of union: {_type}\")");

@@ -148,8 +148,7 @@ public class ImplementMethods : ExposeInterfacePart.Implementation
                 codeWriter.Write("return ");
             }
 
-            codeWriter.Write("_");
-            codeWriter.Write(type.Name.ToCamelCase());
+            codeWriter.WriteFieldName(type);
             codeWriter.Write(".");
             codeWriter.Write(methodSymbol.Name);
 
