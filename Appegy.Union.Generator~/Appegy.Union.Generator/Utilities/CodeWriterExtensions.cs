@@ -1,5 +1,6 @@
 ﻿using System.CodeDom.Compiler;
 using System.Collections.Generic;
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Appegy.Union.Generator;
@@ -19,6 +20,22 @@ internal static class CodeWriterExtensions
             {
                 codeWriter.WriteLine();
             }
+        }
+    }
+
+    public static void WriteFieldName(this IndentedTextWriter codeWriter, ISymbol symbol)
+    {
+        var name = symbol.Name;
+        if (string.IsNullOrEmpty(name))
+        {
+            return;
+        }
+
+        codeWriter.Write("_");
+        codeWriter.Write(char.ToLower(name[0]));
+        for (var i = 1; i < name.Length; i++)
+        {
+            codeWriter.Write(name[i]);
         }
     }
 
