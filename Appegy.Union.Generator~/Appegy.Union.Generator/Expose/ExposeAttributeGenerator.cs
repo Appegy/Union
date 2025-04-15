@@ -18,6 +18,7 @@ public class ExposeAttributeGenerator : IIncrementalGenerator
 {
     private static IReadOnlyList<GeneratorPart<ExposeAttributePartInput>> Parts { get; } =
     [
+        new HeaderPart<ExposeAttributePartInput>(),
         new ExposeUsingsPart(),
         new ExposeParentScopedPart([
             new ExposeDeclarationPart(),

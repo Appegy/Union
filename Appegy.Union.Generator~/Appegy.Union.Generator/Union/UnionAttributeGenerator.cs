@@ -17,6 +17,7 @@ public class UnionAttributeGenerator : IIncrementalGenerator
 {
     private static IReadOnlyList<GeneratorPart<UnionAttributePartInput>> Parts { get; } =
     [
+        new HeaderPart<UnionAttributePartInput>(),
         new UnionUsingsPart(),
         new UnionParentScopedPart([
             new UnionDeclarationPart(),
