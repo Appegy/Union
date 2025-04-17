@@ -43,12 +43,13 @@ public class ExposeAttributeGenerator : IIncrementalGenerator
                 transform: static (ctx, _) =>
                 {
                     var syntax = (StructDeclarationSyntax)ctx.TargetNode;
+                    var symbol = ctx.SemanticModel.GetDeclaredSymbol(syntax) as INamedTypeSymbol;
                     var attribute = ctx.Attributes.First();
                     var interfaces = attribute
                         .GetTypesFromConstructor(TypeKind.Interface)
                         .Select(c => new ExposeInterfaceInfo(c))
                         .ToImmutableList();
-                    return (syntax, interfaces);
+                    return (Symbol: symbol!, Syntax: syntax, Interfaces: interfaces);
                 });
 
         var unionSources = context
@@ -59,23 +60,35 @@ public class ExposeAttributeGenerator : IIncrementalGenerator
                 transform: static (ctx, _) =>
                 {
                     var syntax = (StructDeclarationSyntax)ctx.TargetNode;
+                    var symbol = ctx.SemanticModel.GetDeclaredSymbol(syntax) as INamedTypeSymbol;
                     var attribute = ctx.Attributes.First();
                     var types = attribute
                         .GetTypesFromConstructor(TypeKind.Struct)
                         .Select(c => new ExposeTypeInfo(c))
                         .ToImmutableList();
-                    return (syntax, types);
-                });
+                    return (Symbol: symbol!, Types: types);
+                })
+            .Collect();
 
-        var sources = exposeSources.Combine(unionSources.Collect())
+        var sources = exposeSources
+            .Combine(unionSources)
             .Select(static (input, _) =>
             {
-                var ((syntax, interfaces), unionArray) = input;
-                var unionTypesForThis = unionArray
-                    .Where(x => x.syntax.Span.Equals(syntax.Span) && x.syntax.SyntaxTree.FilePath == syntax.SyntaxTree.FilePath)
-                    .SelectMany(x => x.types)
-                    .ToImmutableList();
-                return (syntax, interfaces, unionTypesForThis);
+                var (expose, unionList) = input;
+
+                var unionMap = unionList
+                    .Where(x => x.Symbol is not null)
+                    .ToDictionary(
+                        x => x.Symbol,
+                        x => x.Types,
+                        SymbolEqualityComparer.Default);
+
+                if (!unionMap.TryGetValue(expose.Symbol, out var unionTypes))
+                {
+                    unionTypes = ImmutableList<ExposeTypeInfo>.Empty;
+                }
+
+                return (syntax: expose.Syntax, interfaces: expose.Interfaces, types: unionTypes);
             });
 
         context.RegisterSourceOutput(sources, static (ctx, input) =>
