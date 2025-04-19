@@ -1,5 +1,6 @@
 ﻿using System.CodeDom.Compiler;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -18,7 +19,6 @@ public class UnionAttributeGenerator : IIncrementalGenerator
     private static IReadOnlyList<GeneratorPart<UnionAttributePartInput>> Parts { get; } =
     [
         new HeaderPart<UnionAttributePartInput>(),
-        new UnionUsingsPart(),
         new UnionParentScopedPart([
             new UnionDeclarationPart(),
             new ScopedPart<UnionAttributePartInput>([
@@ -48,7 +48,10 @@ public class UnionAttributeGenerator : IIncrementalGenerator
                 {
                     var syntax = (StructDeclarationSyntax)ctx.TargetNode;
                     var attribute = ctx.Attributes.First();
-                    var types = attribute.GetTypesFromConstructor(TypeKind.Struct);
+                    var types = attribute
+                        .GetTypesFromConstructor(TypeKind.Struct)
+                        .Select(c => new UnionTypeInfo(c))
+                        .ToImmutableList();
                     return (syntax, types);
                 });
 

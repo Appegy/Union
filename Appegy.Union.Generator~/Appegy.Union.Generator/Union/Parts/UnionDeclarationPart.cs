@@ -8,18 +8,18 @@ public class UnionDeclarationPart : GeneratorPart<UnionAttributePartInput>
     {
         var (syntax, types) = input;
 
-        codeWriter.WriteLine("[StructLayout(LayoutKind.Explicit, Pack = 1)]");
+        codeWriter.WriteLine("[global::System.Runtime.InteropServices.StructLayout(global::System.Runtime.InteropServices.LayoutKind.Explicit, Pack = 1)]");
         codeWriter.Write("partial struct ");
         codeWriter.WriteLine(syntax.Identifier.Text);
 
-        codeWriter.Write("    : IEquatable<");
+        codeWriter.Write("    : global::System.IEquatable<");
         codeWriter.Write(syntax.Identifier.Text);
         codeWriter.WriteLine(">");
 
         foreach (var type in types)
         {
-            codeWriter.Write("    , IEquatable<");
-            codeWriter.Write(type.Name);
+            codeWriter.Write("    , global::System.IEquatable<");
+            codeWriter.Write(type.FullName);
             codeWriter.WriteLine(">");
         }
     }

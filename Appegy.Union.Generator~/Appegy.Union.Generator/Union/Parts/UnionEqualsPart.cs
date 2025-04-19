@@ -15,10 +15,10 @@ public class UnionEqualsPart : GeneratorPart<UnionAttributePartInput>
         codeWriter.WriteLine(" other => Equals(other),");
         foreach (var type in types)
         {
-            codeWriter.Write(type.Name);
+            codeWriter.Write(type.FullName);
             codeWriter.WriteLine(" other => Equals(other),");
         }
-        codeWriter.WriteLine("_ => throw new InvalidOperationException($\"Unknown type of union: {_type}\")");
+        codeWriter.WriteLine("_ => throw new global::System.InvalidOperationException($\"Unknown type of union: {_type}\")");
         codeWriter.Indent--;
         codeWriter.WriteLine("};");
         codeWriter.WriteLine();
@@ -33,12 +33,12 @@ public class UnionEqualsPart : GeneratorPart<UnionAttributePartInput>
             codeWriter.Write("Kind.");
             codeWriter.Write(type.Name);
             codeWriter.Write(" => ");
-            codeWriter.WriteFieldName(type);
+            codeWriter.Write(type.FieldName);
             codeWriter.Write(".Equals(other.");
             codeWriter.Write(type.Name);
             codeWriter.WriteLine("),");
         }
-        codeWriter.WriteLine("_ => throw new InvalidOperationException($\"Unknown type of union: {_type}\")");
+        codeWriter.WriteLine("_ => throw new global::System.InvalidOperationException($\"Unknown type of union: {_type}\")");
         codeWriter.Indent--;
         codeWriter.WriteLine("};");
         codeWriter.WriteLine();
@@ -46,11 +46,11 @@ public class UnionEqualsPart : GeneratorPart<UnionAttributePartInput>
         foreach (var type in types)
         {
             codeWriter.Write("public bool Equals(");
-            codeWriter.Write(type.Name);
+            codeWriter.Write(type.FullName);
             codeWriter.Write(" other) => _type == Kind.");
             codeWriter.Write(type.Name);
             codeWriter.Write(" && ");
-            codeWriter.WriteFieldName(type);
+            codeWriter.Write(type.FieldName);
             codeWriter.WriteLine(".Equals(other);");
         }
     }

@@ -19,7 +19,6 @@ public class ExposeAttributeGenerator : IIncrementalGenerator
     private static IReadOnlyList<GeneratorPart<ExposeAttributePartInput>> Parts { get; } =
     [
         new HeaderPart<ExposeAttributePartInput>(),
-        new ExposeUsingsPart(),
         new ExposeParentScopedPart([
             new ExposeDeclarationPart(),
             new ScopedPart<ExposeAttributePartInput>([
@@ -45,7 +44,10 @@ public class ExposeAttributeGenerator : IIncrementalGenerator
                 {
                     var syntax = (StructDeclarationSyntax)ctx.TargetNode;
                     var attribute = ctx.Attributes.First();
-                    var interfaces = attribute.GetTypesFromConstructor(TypeKind.Interface);
+                    var interfaces = attribute
+                        .GetTypesFromConstructor(TypeKind.Interface)
+                        .Select(c => new ExposeInterfaceInfo(c))
+                        .ToImmutableList();
                     return (syntax, interfaces);
                 });
 
@@ -58,7 +60,10 @@ public class ExposeAttributeGenerator : IIncrementalGenerator
                 {
                     var syntax = (StructDeclarationSyntax)ctx.TargetNode;
                     var attribute = ctx.Attributes.First();
-                    var types = attribute.GetTypesFromConstructor(TypeKind.Struct);
+                    var types = attribute
+                        .GetTypesFromConstructor(TypeKind.Struct)
+                        .Select(c => new ExposeTypeInfo(c))
+                        .ToImmutableList();
                     return (syntax, types);
                 });
 

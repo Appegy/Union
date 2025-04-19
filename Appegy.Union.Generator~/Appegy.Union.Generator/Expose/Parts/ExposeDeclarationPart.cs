@@ -16,7 +16,7 @@ public class ExposeDeclarationPart : GeneratorPart<ExposeAttributePartInput>
         for (var i = 0; i < interfaces.Count; i++)
         {
             var @interface = interfaces[i];
-            codeWriter.Write(@interface.Name);
+            codeWriter.Write(@interface.FullName);
             if (i != interfaces.Count - 1)
             {
                 codeWriter.WriteLine(",");
