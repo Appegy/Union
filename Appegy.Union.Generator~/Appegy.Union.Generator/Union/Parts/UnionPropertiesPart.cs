@@ -1,4 +1,5 @@
 ﻿using System.CodeDom.Compiler;
+using SymbolDisplayFormat = Microsoft.CodeAnalysis.SymbolDisplayFormat;
 
 namespace Appegy.Union.Generator;
 
@@ -14,20 +15,20 @@ public class UnionPropertiesPart : GeneratorPart<UnionAttributePartInput>
         for (var i = 0; i < types.Count; i++)
         {
             var type = types[i];
-            var typeName = type.Name;
+            var typeName = type.Symbol.Name;
 
             codeWriter.Write("public ");
-            codeWriter.Write(type.Name);
+            codeWriter.Write(type.FullName);
             codeWriter.Write(" ");
             codeWriter.WriteLine(typeName);
             codeWriter.WriteLine('{');
             codeWriter.Indent++;
             codeWriter.Write("get => Type != Kind.");
             codeWriter.Write(typeName);
-            codeWriter.Write(" ? throw new Exception($\"Can't get ");
+            codeWriter.Write(" ? throw new global::System.Exception($\"Can't get ");
             codeWriter.Write(typeName);
             codeWriter.Write(" because current type is '{Type}'.\") : ");
-            codeWriter.WriteFieldName(type);
+            codeWriter.Write(type.FieldName);
             codeWriter.WriteLine(";");
             codeWriter.WriteLine("set");
             codeWriter.WriteLine('{');
@@ -35,7 +36,7 @@ public class UnionPropertiesPart : GeneratorPart<UnionAttributePartInput>
             codeWriter.Write("_type = Kind.");
             codeWriter.Write(typeName);
             codeWriter.WriteLine(";");
-            codeWriter.WriteFieldName(type);
+            codeWriter.Write(type.FieldName);
             codeWriter.WriteLine(" = value;");
             codeWriter.Indent--;
             codeWriter.WriteLine('}');

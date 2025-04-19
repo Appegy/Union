@@ -6,7 +6,7 @@ namespace Appegy.Union.Generator;
 
 public class ImplementProperties : ExposeInterfacePart.Implementation
 {
-    public override bool TryGenerateMember(IndentedTextWriter codeWriter, ISymbol member, IReadOnlyList<INamedTypeSymbol> types)
+    public override bool TryGenerateMember(IndentedTextWriter codeWriter, ISymbol member, IReadOnlyList<ExposeTypeInfo> types)
     {
         switch (member)
         {
@@ -18,7 +18,7 @@ public class ImplementProperties : ExposeInterfacePart.Implementation
         }
     }
 
-    private static void GenerateProperty(IndentedTextWriter codeWriter, IPropertySymbol propertySymbol, IReadOnlyList<INamedTypeSymbol> types)
+    private static void GenerateProperty(IndentedTextWriter codeWriter, IPropertySymbol propertySymbol, IReadOnlyList<ExposeTypeInfo> types)
     {
         GeneratePropertyHeader(codeWriter, propertySymbol);
         codeWriter.WriteLine("{");
@@ -43,7 +43,7 @@ public class ImplementProperties : ExposeInterfacePart.Implementation
         codeWriter.WriteLine(propertySymbol.Name);
     }
 
-    private static void GenerateGetterBody(IndentedTextWriter codeWriter, IPropertySymbol propertySymbol, IReadOnlyList<INamedTypeSymbol> types)
+    private static void GenerateGetterBody(IndentedTextWriter codeWriter, IPropertySymbol propertySymbol, IReadOnlyList<ExposeTypeInfo> types)
     {
         codeWriter.WriteLine("get");
         codeWriter.WriteLine("{");
@@ -56,19 +56,19 @@ public class ImplementProperties : ExposeInterfacePart.Implementation
             codeWriter.Write("case Kind.");
             codeWriter.Write(type.Name);
             codeWriter.Write(": return ");
-            codeWriter.WriteFieldName(type);
+            codeWriter.Write(type.FieldName);
             codeWriter.Write(".");
             codeWriter.Write(propertySymbol.Name);
             codeWriter.WriteLine(";");
         }
-        codeWriter.WriteLine("default: throw new InvalidOperationException($\"Unknown type of union: {_type}\");");
+        codeWriter.WriteLine("default: throw new global::System.InvalidOperationException($\"Unknown type of union: {_type}\");");
         codeWriter.Indent--;
         codeWriter.WriteLine("}");
         codeWriter.Indent--;
         codeWriter.WriteLine("}");
     }
 
-    private static void GenerateSetterBody(IndentedTextWriter codeWriter, IPropertySymbol propertySymbol, IReadOnlyList<INamedTypeSymbol> types)
+    private static void GenerateSetterBody(IndentedTextWriter codeWriter, IPropertySymbol propertySymbol, IReadOnlyList<ExposeTypeInfo> types)
     {
         codeWriter.WriteLine("set");
         codeWriter.WriteLine("{");
@@ -81,13 +81,13 @@ public class ImplementProperties : ExposeInterfacePart.Implementation
             codeWriter.Write("case Kind.");
             codeWriter.Write(type.Name);
             codeWriter.Write(": ");
-            codeWriter.WriteFieldName(type);
+            codeWriter.Write(type.FieldName);
             codeWriter.Write(".");
             codeWriter.Write(propertySymbol.Name);
             codeWriter.Write(" = value; break;");
             codeWriter.WriteLine();
         }
-        codeWriter.WriteLine("default: throw new InvalidOperationException($\"Unknown type of union: {_type}\");");
+        codeWriter.WriteLine("default: throw new global::System.InvalidOperationException($\"Unknown type of union: {_type}\");");
         codeWriter.Indent--;
         codeWriter.WriteLine("}");
         codeWriter.Indent--;

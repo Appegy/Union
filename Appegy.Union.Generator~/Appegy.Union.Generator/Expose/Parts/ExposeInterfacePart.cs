@@ -9,7 +9,7 @@ public class ExposeInterfacePart(IReadOnlyList<ExposeInterfacePart.Implementatio
 {
     public abstract class Implementation
     {
-        public abstract bool TryGenerateMember(IndentedTextWriter codeWriter, ISymbol member, IReadOnlyList<INamedTypeSymbol> types);
+        public abstract bool TryGenerateMember(IndentedTextWriter codeWriter, ISymbol member, IReadOnlyList<ExposeTypeInfo> types);
     }
 
     public IReadOnlyList<Implementation> Implementers { get; } = implementers;
@@ -22,13 +22,13 @@ public class ExposeInterfacePart(IReadOnlyList<ExposeInterfacePart.Implementatio
         {
             var @interface = interfaces[index];
             codeWriter.Write("#region Implement ");
-            codeWriter.WriteLine(@interface.Name);
+            codeWriter.WriteLine(@interface.FullName);
             codeWriter.WriteLine();
 
-            ImplementInterface(codeWriter, types, @interface.GetMembers());
+            ImplementInterface(codeWriter, types, @interface.Symbol.GetMembers());
 
             codeWriter.Write("#endregion Implement ");
-            codeWriter.WriteLine(@interface.Name);
+            codeWriter.WriteLine(@interface.FullName);
 
             if (index < interfaces.Count - 1)
             {
@@ -37,7 +37,7 @@ public class ExposeInterfacePart(IReadOnlyList<ExposeInterfacePart.Implementatio
         }
     }
 
-    private void ImplementInterface(IndentedTextWriter codeWriter, IReadOnlyList<INamedTypeSymbol> types, IReadOnlyList<ISymbol> members)
+    private void ImplementInterface(IndentedTextWriter codeWriter, IReadOnlyList<ExposeTypeInfo> types, IReadOnlyList<ISymbol> members)
     {
         var needNewLine = false;
         foreach (var member in members)

@@ -16,10 +16,10 @@ public class UnionGetHashCodePart : GeneratorPart<UnionAttributePartInput>
             codeWriter.Write("Kind.");
             codeWriter.Write(type.Name);
             codeWriter.Write(" => ");
-            codeWriter.WriteFieldName(type);
+            codeWriter.Write(type.FieldName);
             codeWriter.WriteLine(".GetHashCode(),");
         }
-        codeWriter.WriteLine("_ => throw new InvalidOperationException($\"Unknown type of union: {_type}\")");
+        codeWriter.WriteLine("_ => throw new global::System.InvalidOperationException($\"Unknown type of union: {_type}\")");
         codeWriter.Indent--;
         codeWriter.WriteLine("};");
     }

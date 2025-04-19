@@ -26,4 +26,15 @@ public static class SyntaxTreeExtensions
 
         return types.ToImmutable();
     }
+
+    public static string GetFieldName(this INamedTypeSymbol symbol)
+    {
+        var name = symbol.Name;
+
+        if (string.IsNullOrEmpty(name)) return string.Empty;
+
+        return name.Length > 1
+            ? "_" + char.ToLower(name[0]) + name.Substring(1)
+            : "_" + char.ToLower(name[0]);
+    }
 }

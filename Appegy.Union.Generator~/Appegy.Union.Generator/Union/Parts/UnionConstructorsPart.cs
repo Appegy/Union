@@ -17,7 +17,7 @@ public class UnionConstructorsPart : GeneratorPart<UnionAttributePartInput>
             codeWriter.Write("public ");
             codeWriter.Write(syntax.Identifier.Text);
             codeWriter.Write("(");
-            codeWriter.Write(type.Name);
+            codeWriter.Write(type.FullName);
             codeWriter.WriteLine(" value)");
             codeWriter.WriteLine('{');
             codeWriter.Indent++;
@@ -26,14 +26,14 @@ public class UnionConstructorsPart : GeneratorPart<UnionAttributePartInput>
             codeWriter.WriteLine(";");
             foreach (var otherType in types)
             {
-                if (SymbolEqualityComparer.Default.Equals(otherType, type))
+                if (SymbolEqualityComparer.Default.Equals(otherType.Symbol, type.Symbol))
                 {
                     continue;
                 }
-                codeWriter.WriteFieldName(otherType);
+                codeWriter.Write(otherType.FieldName);
                 codeWriter.WriteLine(" = default;");
             }
-            codeWriter.WriteFieldName(type);
+            codeWriter.Write(type.FieldName);
             codeWriter.WriteLine(" = value;");
             codeWriter.Indent--;
             codeWriter.WriteLine('}');

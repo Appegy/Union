@@ -6,7 +6,7 @@ namespace Appegy.Union.Generator;
 
 public class ImplementMethods : ExposeInterfacePart.Implementation
 {
-    public override bool TryGenerateMember(IndentedTextWriter codeWriter, ISymbol member, IReadOnlyList<INamedTypeSymbol> types)
+    public override bool TryGenerateMember(IndentedTextWriter codeWriter, ISymbol member, IReadOnlyList<ExposeTypeInfo> types)
     {
         switch (member)
         {
@@ -18,7 +18,7 @@ public class ImplementMethods : ExposeInterfacePart.Implementation
         }
     }
 
-    private static void GenerateMethod(IndentedTextWriter codeWriter, IMethodSymbol methodSymbol, IReadOnlyList<INamedTypeSymbol> types)
+    private static void GenerateMethod(IndentedTextWriter codeWriter, IMethodSymbol methodSymbol, IReadOnlyList<ExposeTypeInfo> types)
     {
         GenerateMethodHeader(codeWriter, methodSymbol);
 
@@ -34,7 +34,7 @@ public class ImplementMethods : ExposeInterfacePart.Implementation
     private static void GenerateMethodHeader(IndentedTextWriter codeWriter, IMethodSymbol methodSymbol)
     {
         codeWriter.Write("public ");
-        codeWriter.Write(methodSymbol.ReturnType.ToDisplayString());
+        codeWriter.Write(methodSymbol.ReturnType.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat));
         codeWriter.Write(" ");
         codeWriter.Write(methodSymbol.Name);
 
@@ -71,7 +71,7 @@ public class ImplementMethods : ExposeInterfacePart.Implementation
                 }
             }
 
-            codeWriter.Write(param.Type.ToDisplayString());
+            codeWriter.Write(param.Type.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat));
             codeWriter.Write(" ");
             codeWriter.Write(param.Name);
         }
@@ -119,7 +119,7 @@ public class ImplementMethods : ExposeInterfacePart.Implementation
             }
             foreach (var constraint in typeParameter.ConstraintTypes)
             {
-                addConstraint(constraint.ToDisplayString());
+                addConstraint(constraint.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat));
             }
             if (typeParameter.HasConstructorConstraint)
             {
@@ -131,7 +131,7 @@ public class ImplementMethods : ExposeInterfacePart.Implementation
         codeWriter.WriteLine();
     }
 
-    private static void GenerateMethodBody(IndentedTextWriter codeWriter, IMethodSymbol methodSymbol, IReadOnlyList<INamedTypeSymbol> types)
+    private static void GenerateMethodBody(IndentedTextWriter codeWriter, IMethodSymbol methodSymbol, IReadOnlyList<ExposeTypeInfo> types)
     {
         codeWriter.WriteLine("switch (_type)");
         codeWriter.WriteLine("{");
@@ -148,7 +148,7 @@ public class ImplementMethods : ExposeInterfacePart.Implementation
                 codeWriter.Write("return ");
             }
 
-            codeWriter.WriteFieldName(type);
+            codeWriter.Write(type.FieldName);
             codeWriter.Write(".");
             codeWriter.Write(methodSymbol.Name);
 
@@ -168,7 +168,7 @@ public class ImplementMethods : ExposeInterfacePart.Implementation
             codeWriter.WriteLine(");");
         }
 
-        codeWriter.WriteLine("default: throw new InvalidOperationException($\"Unknown type of union: {_type}\");");
+        codeWriter.WriteLine("default: throw new global::System.InvalidOperationException($\"Unknown type of union: {_type}\");");
 
         codeWriter.Indent--;
         codeWriter.WriteLine("}");
