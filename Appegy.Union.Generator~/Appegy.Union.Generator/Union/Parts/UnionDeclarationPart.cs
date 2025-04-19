@@ -8,6 +8,7 @@ public class UnionDeclarationPart : GeneratorPart<UnionAttributePartInput>
     {
         var (syntax, types) = input;
 
+        codeWriter.WriteLine(AttributesSource.GeneratedCodeAttribute);
         codeWriter.WriteLine("[global::System.Runtime.InteropServices.StructLayout(global::System.Runtime.InteropServices.LayoutKind.Explicit, Pack = 1)]");
         codeWriter.Write("partial struct ");
         codeWriter.WriteLine(syntax.Identifier.Text);
