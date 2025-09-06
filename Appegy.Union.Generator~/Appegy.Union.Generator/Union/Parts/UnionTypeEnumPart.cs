@@ -6,7 +6,7 @@ public class UnionTypeEnumPart : GeneratorPart<UnionAttributePartInput>
 {
     public override void Generate(IndentedTextWriter codeWriter, UnionAttributePartInput input)
     {
-        var (_, types) = input;
+        var types = input.Types;
 
         codeWriter.WriteLine("[global::System.Serializable]");
         codeWriter.WriteLine("public enum Kind : global::System.Byte");
