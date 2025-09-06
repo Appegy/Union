@@ -45,32 +45,32 @@ public class UnionAttributeAnalyzer : DiagnosticAnalyzer
 
     private static void VerifyPartialModifier(SyntaxNodeAnalysisContext context, AttributeSyntax attributeSyntax)
     {
-        if (attributeSyntax.Parent?.Parent is not StructDeclarationSyntax structDeclaration)
+        if (attributeSyntax.Parent?.Parent is not TypeDeclarationSyntax typeDeclaration)
         {
             return;
         }
 
-        if (structDeclaration.Modifiers.Any(SyntaxKind.PartialKeyword))
+        if (typeDeclaration.Modifiers.Any(SyntaxKind.PartialKeyword))
         {
             return;
         }
 
         var diagnostic = Diagnostic.Create(
             NotPartial,
-            structDeclaration.Identifier.GetLocation(),
-            structDeclaration.Identifier.Text);
+            typeDeclaration.Identifier.GetLocation(),
+            typeDeclaration.Identifier.Text);
 
         context.ReportDiagnostic(diagnostic);
     }
 
     private static void VerifyParentsPartial(SyntaxNodeAnalysisContext context, AttributeSyntax attributeSyntax)
     {
-        if (attributeSyntax.Parent?.Parent is not StructDeclarationSyntax structDeclaration)
+        if (attributeSyntax.Parent?.Parent is not TypeDeclarationSyntax typeDeclaration)
         {
             return;
         }
 
-        var parent = structDeclaration.Parent;
+        var parent = typeDeclaration.Parent;
         while (parent is TypeDeclarationSyntax parentType)
         {
             if (!parentType.Modifiers.Any(SyntaxKind.PartialKeyword))
