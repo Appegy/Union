@@ -6,7 +6,7 @@ public class UnionGetHashCodePart : GeneratorPart<UnionAttributePartInput>
 {
     public override void Generate(IndentedTextWriter codeWriter, UnionAttributePartInput input)
     {
-        var (_, types) = input;
+        var types = input.Types;
 
         codeWriter.WriteLine("public override int GetHashCode() => _type switch");
         codeWriter.WriteLine('{');

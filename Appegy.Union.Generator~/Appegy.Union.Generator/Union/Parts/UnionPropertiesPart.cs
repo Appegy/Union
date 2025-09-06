@@ -1,5 +1,4 @@
 ﻿using System.CodeDom.Compiler;
-using SymbolDisplayFormat = Microsoft.CodeAnalysis.SymbolDisplayFormat;
 
 namespace Appegy.Union.Generator;
 
@@ -7,7 +6,7 @@ public class UnionPropertiesPart : GeneratorPart<UnionAttributePartInput>
 {
     public override void Generate(IndentedTextWriter codeWriter, UnionAttributePartInput input)
     {
-        var (_, types) = input;
+        var types = input.Types;
 
         codeWriter.WriteLine("public Kind Type => _type;");
         codeWriter.WriteLine();

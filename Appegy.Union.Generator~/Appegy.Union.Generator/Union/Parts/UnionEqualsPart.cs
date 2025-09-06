@@ -6,7 +6,8 @@ public class UnionEqualsPart : GeneratorPart<UnionAttributePartInput>
 {
     public override void Generate(IndentedTextWriter codeWriter, UnionAttributePartInput input)
     {
-        var (syntax, types) = input;
+        var syntax = input.Syntax;
+        var types = input.Types;
 
         codeWriter.WriteLine("public override bool Equals(object boxed) => boxed switch");
         codeWriter.WriteLine('{');

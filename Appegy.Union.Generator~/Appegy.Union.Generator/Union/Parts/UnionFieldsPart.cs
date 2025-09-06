@@ -6,14 +6,21 @@ public class UnionFieldsPart : GeneratorPart<UnionAttributePartInput>
 {
     public override void Generate(IndentedTextWriter codeWriter, UnionAttributePartInput input)
     {
-        var (_, types) = input;
+        var types = input.Types;
+        var explicitLayout = input.ExplicitLayout;
 
-        codeWriter.WriteLine("[global::System.Runtime.InteropServices.FieldOffset(0)]");
+        if (explicitLayout)
+        {
+            codeWriter.WriteLine("[global::System.Runtime.InteropServices.FieldOffset(0)]");
+        }
         codeWriter.WriteLine("private Kind _type;");
 
         foreach (var type in types)
         {
-            codeWriter.WriteLine("[global::System.Runtime.InteropServices.FieldOffset(1)]");
+            if (explicitLayout)
+            {
+                codeWriter.WriteLine("[global::System.Runtime.InteropServices.FieldOffset(1)]");
+            }
             codeWriter.Write("private ");
             codeWriter.Write(type.FullName);
             codeWriter.Write(' ');
