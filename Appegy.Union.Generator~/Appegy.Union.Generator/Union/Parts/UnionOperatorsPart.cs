@@ -6,7 +6,8 @@ public class UnionOperatorsPart : GeneratorPart<UnionAttributePartInput>
 {
     public override void Generate(IndentedTextWriter codeWriter, UnionAttributePartInput input)
     {
-        var (syntax, types) = input;
+        var syntax = input.Syntax;
+        var types = input.Types;
 
         for (var i = 0; i < types.Count; i++)
         {

@@ -6,7 +6,8 @@ public class UnionComparisonPart : GeneratorPart<UnionAttributePartInput>
 {
     public override void Generate(IndentedTextWriter codeWriter, UnionAttributePartInput input)
     {
-        var (syntax, types) = input;
+        var syntax = input.Syntax;
+        var types = input.Types;
 
         codeWriter.Write("public static bool operator ==(");
         codeWriter.Write(syntax.Identifier.Text);
