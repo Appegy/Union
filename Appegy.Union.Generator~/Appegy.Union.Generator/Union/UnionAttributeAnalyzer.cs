@@ -17,7 +17,6 @@ public class UnionAttributeAnalyzer : DiagnosticAnalyzer
             NotPartial,
             NestedNotPartial,
             NoTypesProvided,
-            NotStruct,
             DuplicateUnionType);
 
     public override void Initialize(AnalysisContext context)
@@ -39,7 +38,6 @@ public class UnionAttributeAnalyzer : DiagnosticAnalyzer
         VerifyPartialModifier(context, attributeSyntax);
         VerifyParentsPartial(context, attributeSyntax);
         VerifyArgumentsExistence(context, attributeSyntax);
-        VerifyAllTypesAreStruct(context, attributeSyntax);
         VerifyNoDuplicate(context, attributeSyntax);
     }
 
@@ -97,34 +95,6 @@ public class UnionAttributeAnalyzer : DiagnosticAnalyzer
             attributeSyntax.GetLocation());
 
         context.ReportDiagnostic(diagnostic);
-    }
-
-    private void VerifyAllTypesAreStruct(SyntaxNodeAnalysisContext context, AttributeSyntax attributeSyntax)
-    {
-        var arguments = attributeSyntax.ArgumentList?.Arguments;
-        if (arguments == null || arguments.Value.Count == 0)
-        {
-            return;
-        }
-
-        foreach (var argument in arguments)
-        {
-            if (argument.Expression is not TypeOfExpressionSyntax typeOfExpression)
-            {
-                continue;
-            }
-
-            var typeInfo = context.SemanticModel.GetTypeInfo(typeOfExpression.Type);
-            if (typeInfo.Type?.TypeKind != TypeKind.Struct)
-            {
-                var diagnostic = Diagnostic.Create(
-                    NotStruct,
-                    typeOfExpression.Type.GetLocation(),
-                    typeInfo.Type?.ToDisplayString() ?? "unknown");
-
-                context.ReportDiagnostic(diagnostic);
-            }
-        }
     }
 
     private void VerifyNoDuplicate(SyntaxNodeAnalysisContext context, AttributeSyntax attributeSyntax)
