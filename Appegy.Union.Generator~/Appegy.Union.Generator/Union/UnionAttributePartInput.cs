@@ -4,7 +4,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Appegy.Union.Generator;
 
-public record struct UnionAttributePartInput(StructDeclarationSyntax Syntax, IReadOnlyList<UnionTypeInfo> Types, bool ExplicitLayout);
+public record struct UnionAttributePartInput(TypeDeclarationSyntax Syntax, IReadOnlyList<UnionTypeInfo> Types, bool ExplicitLayout);
 
 public readonly struct UnionTypeInfo(INamedTypeSymbol symbol)
 {

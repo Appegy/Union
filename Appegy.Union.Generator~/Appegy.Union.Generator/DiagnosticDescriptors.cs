@@ -6,14 +6,6 @@ public static class DiagnosticDescriptors
 {
     private const string Category = "Union";
 
-    public static DiagnosticDescriptor NotStruct { get; } = new(
-        id: "UNION001",
-        title: "Type has to be struct",
-        messageFormat: "The type '{0}' must be a struct to use [Union].",
-        category: Category,
-        defaultSeverity: DiagnosticSeverity.Error,
-        isEnabledByDefault: true);
-
     public static DiagnosticDescriptor NotPartial { get; } = new(
         id: "UNION002",
         title: "Struct is not partial",

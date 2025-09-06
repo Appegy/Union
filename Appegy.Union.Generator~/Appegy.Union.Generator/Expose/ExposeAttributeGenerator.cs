@@ -36,11 +36,11 @@ public class ExposeAttributeGenerator : IIncrementalGenerator
             .SyntaxProvider
             .ForAttributeWithMetadataName(
                 ExposeAttributeName,
-                predicate: static (syntax, _) => syntax is StructDeclarationSyntax,
+                predicate: static (syntax, _) => syntax is TypeDeclarationSyntax,
                 transform: static (ctx, _) =>
                 {
-                    var syntax = (StructDeclarationSyntax)ctx.TargetNode;
-                    var symbol = ctx.SemanticModel.GetDeclaredSymbol(syntax) as INamedTypeSymbol;
+                    var syntax = (TypeDeclarationSyntax)ctx.TargetNode;
+                    var symbol = ctx.SemanticModel.GetDeclaredSymbol(syntax);
                     var attribute = ctx.Attributes.First();
                     var interfaces = attribute
                         .GetTypesFromConstructor(TypeKind.Interface)
@@ -53,14 +53,14 @@ public class ExposeAttributeGenerator : IIncrementalGenerator
             .SyntaxProvider
             .ForAttributeWithMetadataName(
                 UnionAttributeName,
-                predicate: static (syntax, _) => syntax is StructDeclarationSyntax,
+                predicate: static (syntax, _) => syntax is TypeDeclarationSyntax,
                 transform: static (ctx, _) =>
                 {
-                    var syntax = (StructDeclarationSyntax)ctx.TargetNode;
-                    var symbol = ctx.SemanticModel.GetDeclaredSymbol(syntax) as INamedTypeSymbol;
+                    var syntax = (TypeDeclarationSyntax)ctx.TargetNode;
+                    var symbol = ctx.SemanticModel.GetDeclaredSymbol(syntax);
                     var attribute = ctx.Attributes.First();
                     var types = attribute
-                        .GetTypesFromConstructor(TypeKind.Struct)
+                        .GetTypesFromConstructor()
                         .Select(c => new ExposeTypeInfo(c))
                         .ToImmutableList();
                     return (Symbol: symbol!, Types: types);
