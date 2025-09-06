@@ -36,7 +36,7 @@ public class ShapePropertyTests
     public void WhenSettingCircle_ThenTypeIsCircle()
     {
         // Arrange
-        var shape = new Shape();
+        var shape = new Shape(new Hexagon());
         var circle = new Circle(5);
 
         // Act
@@ -76,7 +76,7 @@ public class ShapePropertyTests
     public void WhenSettingRectangle_ThenTypeIsRectangle()
     {
         // Arrange
-        var shape = new Shape();
+        var shape = new Shape(new Hexagon());
         var rectangle = new Rectangle(4, 6);
 
         // Act
@@ -116,7 +116,7 @@ public class ShapePropertyTests
     public void WhenSettingHexagon_ThenTypeIsHexagon()
     {
         // Arrange
-        var shape = new Shape();
+        var shape = new Shape(new Circle());
         var hexagon = new Hexagon(3);
 
         // Act

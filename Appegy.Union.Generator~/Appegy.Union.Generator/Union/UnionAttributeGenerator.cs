@@ -40,14 +40,14 @@ public class UnionAttributeGenerator : IIncrementalGenerator
             .SyntaxProvider
             .ForAttributeWithMetadataName(
                 UnionAttributeName,
-                predicate: static (syntax, _) => syntax is StructDeclarationSyntax,
+                predicate: static (syntax, _) => syntax is TypeDeclarationSyntax,
                 transform: static (ctx, _) =>
                 {
-                    var syntax = (StructDeclarationSyntax)ctx.TargetNode;
+                    var syntax = (TypeDeclarationSyntax)ctx.TargetNode;
                     var symbol = ctx.SemanticModel.GetDeclaredSymbol(syntax);
                     var attribute = ctx.Attributes.First();
                     var types = attribute
-                        .GetTypesFromConstructor(TypeKind.Struct)
+                        .GetTypesFromConstructor()
                         .Select(c => new UnionTypeInfo(c))
                         .ToImmutableList();
 

@@ -4,7 +4,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Appegy.Union.Generator;
 
-public record struct ExposeAttributePartInput(StructDeclarationSyntax Syntax, IReadOnlyList<ExposeTypeInfo> Types, IReadOnlyList<ExposeInterfaceInfo> Interfaces);
+public record struct ExposeAttributePartInput(TypeDeclarationSyntax Syntax, IReadOnlyList<ExposeTypeInfo> Types, IReadOnlyList<ExposeInterfaceInfo> Interfaces);
 
 public readonly struct ExposeTypeInfo(INamedTypeSymbol symbol)
 {

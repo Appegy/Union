@@ -17,7 +17,6 @@ public class UnionAttributeAnalyzer : DiagnosticAnalyzer
             NotPartial,
             NestedNotPartial,
             NoTypesProvided,
-            NotStruct,
             DuplicateUnionType);
 
     public override void Initialize(AnalysisContext context)
@@ -39,38 +38,37 @@ public class UnionAttributeAnalyzer : DiagnosticAnalyzer
         VerifyPartialModifier(context, attributeSyntax);
         VerifyParentsPartial(context, attributeSyntax);
         VerifyArgumentsExistence(context, attributeSyntax);
-        VerifyAllTypesAreStruct(context, attributeSyntax);
         VerifyNoDuplicate(context, attributeSyntax);
     }
 
     private static void VerifyPartialModifier(SyntaxNodeAnalysisContext context, AttributeSyntax attributeSyntax)
     {
-        if (attributeSyntax.Parent?.Parent is not StructDeclarationSyntax structDeclaration)
+        if (attributeSyntax.Parent?.Parent is not TypeDeclarationSyntax typeDeclaration)
         {
             return;
         }
 
-        if (structDeclaration.Modifiers.Any(SyntaxKind.PartialKeyword))
+        if (typeDeclaration.Modifiers.Any(SyntaxKind.PartialKeyword))
         {
             return;
         }
 
         var diagnostic = Diagnostic.Create(
             NotPartial,
-            structDeclaration.Identifier.GetLocation(),
-            structDeclaration.Identifier.Text);
+            typeDeclaration.Identifier.GetLocation(),
+            typeDeclaration.Identifier.Text);
 
         context.ReportDiagnostic(diagnostic);
     }
 
     private static void VerifyParentsPartial(SyntaxNodeAnalysisContext context, AttributeSyntax attributeSyntax)
     {
-        if (attributeSyntax.Parent?.Parent is not StructDeclarationSyntax structDeclaration)
+        if (attributeSyntax.Parent?.Parent is not TypeDeclarationSyntax typeDeclaration)
         {
             return;
         }
 
-        var parent = structDeclaration.Parent;
+        var parent = typeDeclaration.Parent;
         while (parent is TypeDeclarationSyntax parentType)
         {
             if (!parentType.Modifiers.Any(SyntaxKind.PartialKeyword))
@@ -97,34 +95,6 @@ public class UnionAttributeAnalyzer : DiagnosticAnalyzer
             attributeSyntax.GetLocation());
 
         context.ReportDiagnostic(diagnostic);
-    }
-
-    private void VerifyAllTypesAreStruct(SyntaxNodeAnalysisContext context, AttributeSyntax attributeSyntax)
-    {
-        var arguments = attributeSyntax.ArgumentList?.Arguments;
-        if (arguments == null || arguments.Value.Count == 0)
-        {
-            return;
-        }
-
-        foreach (var argument in arguments)
-        {
-            if (argument.Expression is not TypeOfExpressionSyntax typeOfExpression)
-            {
-                continue;
-            }
-
-            var typeInfo = context.SemanticModel.GetTypeInfo(typeOfExpression.Type);
-            if (typeInfo.Type?.TypeKind != TypeKind.Struct)
-            {
-                var diagnostic = Diagnostic.Create(
-                    NotStruct,
-                    typeOfExpression.Type.GetLocation(),
-                    typeInfo.Type?.ToDisplayString() ?? "unknown");
-
-                context.ReportDiagnostic(diagnostic);
-            }
-        }
     }
 
     private void VerifyNoDuplicate(SyntaxNodeAnalysisContext context, AttributeSyntax attributeSyntax)

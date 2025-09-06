@@ -1,4 +1,5 @@
 ﻿using System.CodeDom.Compiler;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Appegy.Union.Generator;
 
@@ -8,7 +9,18 @@ public class ExposeDeclarationPart : GeneratorPart<ExposeAttributePartInput>
     {
         var (syntax, _, interfaces) = input;
 
-        codeWriter.Write("partial struct ");
+        codeWriter.Write("partial ");
+
+        switch (syntax)
+        {
+            case StructDeclarationSyntax:
+                codeWriter.Write("struct ");
+                break;
+            case ClassDeclarationSyntax:
+                codeWriter.Write("class ");
+                break;
+        }
+
         codeWriter.Write(syntax.Identifier.Text);
 
         codeWriter.WriteLine(" :");

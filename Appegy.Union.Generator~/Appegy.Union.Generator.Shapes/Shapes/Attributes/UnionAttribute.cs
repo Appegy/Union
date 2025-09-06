@@ -2,7 +2,7 @@ using System;
 
 namespace Appegy.Union
 {
-    [AttributeUsage(System.AttributeTargets.Struct | AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
+    [AttributeUsage(System.AttributeTargets.Struct | AttributeTargets.Class, Inherited = false)]
     public class UnionAttribute : System.Attribute
     {
         public System.Type[] Types { get; }
