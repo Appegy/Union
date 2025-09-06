@@ -12,4 +12,5 @@ public readonly struct UnionTypeInfo(INamedTypeSymbol symbol)
     public readonly INamedTypeSymbol Symbol = symbol;
     public readonly string FullName = symbol.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat);
     public readonly string FieldName = symbol.GetFieldName();
+    public readonly string ParamName = symbol.GetParamName();
 }
