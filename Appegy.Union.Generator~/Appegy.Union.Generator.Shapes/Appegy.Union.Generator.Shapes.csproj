@@ -10,4 +10,7 @@
         <ProjectReference Include="..\Appegy.Union.Generator\Appegy.Union.Generator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false"/>
     </ItemGroup>
 
+    <ItemGroup>
+    </ItemGroup>
+
 </Project>
