@@ -8,7 +8,6 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Text;
-using static Appegy.Union.Generator.AttributesSource;
 using static Appegy.Union.Generator.AttributesNames;
 
 namespace Appegy.Union.Generator;
@@ -37,8 +36,6 @@ public class UnionAttributeGenerator : IIncrementalGenerator
 
     public void Initialize(IncrementalGeneratorInitializationContext context)
     {
-        context.RegisterPostInitializationOutput(c => c.AddSource("UnionAttribute.g.cs", UnionAttribute));
-
         var sources = context
             .SyntaxProvider
             .ForAttributeWithMetadataName(
