@@ -2,7 +2,7 @@ using System;
 
 namespace Appegy.Union
 {
-    [AttributeUsage(AttributeTargets.Struct | AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
+    [AttributeUsage(AttributeTargets.Struct)]
     public class ExposeAttribute : Attribute
     {
         public Type[] Interfaces { get; }
