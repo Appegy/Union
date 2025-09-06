@@ -1,4 +1,5 @@
-﻿using System.CodeDom.Compiler;
+﻿using System;
+using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -21,6 +22,11 @@ internal static class CodeWriterExtensions
                 codeWriter.WriteLine();
             }
         }
+    }
+
+    public static IDisposable IndentScope(this IndentedTextWriter codeWriter)
+    {
+        return new  DisposableIndent(codeWriter);
     }
 
     public static void WriteFieldName(this IndentedTextWriter codeWriter, ISymbol symbol)

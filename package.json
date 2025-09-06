@@ -2,7 +2,7 @@
   "name": "com.appegy.union",
   "displayName": "Appegy: Union",
   "description": "Struct union for Unity.",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "unity": "2021.3",
   "documentationUrl": "https://github.com/Appegy/Union",
   "changelogUrl": "https://github.com/Appegy/Union/releases",
@@ -12,7 +12,7 @@
   ],
   "author": {
     "name": "Appegy",
-    "email" : "imurashka.me@gmail.com",
+    "email": "imurashka.me@gmail.com",
     "url": "https://github.com/Appegy"
   }
 }

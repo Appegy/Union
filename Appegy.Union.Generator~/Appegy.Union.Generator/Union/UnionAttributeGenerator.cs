@@ -25,6 +25,7 @@ public class UnionAttributeGenerator : IIncrementalGenerator
                 new UnionFieldsPart(),
                 new UnionPropertiesPart(),
                 new UnionConstructorsPart(),
+                new UnionMatchPart(),
                 new UnionToStringPart(),
                 new UnionGetHashCodePart(),
                 new UnionEqualsPart(),

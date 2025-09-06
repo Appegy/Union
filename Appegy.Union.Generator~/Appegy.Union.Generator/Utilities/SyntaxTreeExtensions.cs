@@ -30,11 +30,21 @@ public static class SyntaxTreeExtensions
     public static string GetFieldName(this INamedTypeSymbol symbol)
     {
         var name = symbol.Name;
+        var param = symbol.GetParamName();
+
+        if (string.IsNullOrEmpty(param)) return string.Empty;
+
+        return "_" + param;
+    }
+
+    public static string GetParamName(this INamedTypeSymbol symbol)
+    {
+        var name = symbol.Name;
 
         if (string.IsNullOrEmpty(name)) return string.Empty;
 
         return name.Length > 1
-            ? "_" + char.ToLower(name[0]) + name.Substring(1)
-            : "_" + char.ToLower(name[0]);
+            ? char.ToLower(name[0]) + name.Substring(1)
+            : name.ToLower();
     }
 }
