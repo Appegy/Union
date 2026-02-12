@@ -8,6 +8,11 @@ public readonly struct Circle(double radius) : IShape, IEquatable<Circle>
 
     public double Area => Math.PI * Radius * Radius;
 
+    public void LogArea()
+    {
+        Console.WriteLine($"{nameof(Circle)} area: {Area}");
+    }
+
     public override string ToString()
     {
         return nameof(Circle);
