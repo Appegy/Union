@@ -8,6 +8,11 @@ public readonly struct Rectangle(double width, double height) : IShape, IEquatab
     public double Height { get; } = height;
     public double Area => Width * Height;
 
+    public void LogArea()
+    {
+        Console.WriteLine($"{nameof(Rectangle)} area: {Area}");
+    }
+
     public override string ToString()
     {
         return nameof(Rectangle);
