@@ -8,6 +8,11 @@ public readonly struct Hexagon(double sideLength) : IShape, IEquatable<Hexagon>
 
     public double Area => 3 * Math.Sqrt(3) * SideLength * SideLength / 2;
 
+    public void LogArea()
+    {
+        Console.WriteLine($"{nameof(Hexagon)} area: {Area}");
+    }
+
     public override string ToString()
     {
         return nameof(Hexagon);

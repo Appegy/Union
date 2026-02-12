@@ -5,6 +5,7 @@ namespace Appegy.Union.Generator.Shapes;
 public interface IShape
 {
     double Area { get; }
+    void LogArea();
 }
 
 [Union(typeof(Circle), typeof(Rectangle), typeof(Hexagon))]

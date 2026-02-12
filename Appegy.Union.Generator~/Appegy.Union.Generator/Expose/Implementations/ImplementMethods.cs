@@ -165,7 +165,14 @@ public class ImplementMethods : ExposeInterfacePart.Implementation
 
             codeWriter.Write("(");
             GenerateMethodArguments(codeWriter, methodSymbol);
-            codeWriter.WriteLine(");");
+            codeWriter.Write(");");
+
+            if (methodSymbol.ReturnsVoid)
+            {
+                codeWriter.Write(" break;");
+            }
+
+            codeWriter.WriteLine();
         }
 
         codeWriter.WriteLine("default: throw new global::System.InvalidOperationException($\"Unknown type of union: {_type}\");");
