@@ -2,7 +2,7 @@
   "name": "com.appegy.union",
   "displayName": "Appegy: Union",
   "description": "Struct union for Unity.",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "unity": "2021.3",
   "documentationUrl": "https://github.com/Appegy/Union",
   "changelogUrl": "https://github.com/Appegy/Union/releases",
