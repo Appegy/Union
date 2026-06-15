@@ -58,3 +58,7 @@ sysinfo.txt
 
 # Ignore AndroidLogcatSettings.asset
 ProjectSettings/AndroidLogcatSettings.asset
+# Agent tooling
+.claude/
+.codex/
+.agents/
