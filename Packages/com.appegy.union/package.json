@@ -3,7 +3,7 @@
   "displayName": "Appegy: Union",
   "description": "Struct union for Unity.",
   "version": "1.0.2",
-  "unity": "2021.3",
+  "unity": "6000.0",
   "documentationUrl": "https://github.com/Appegy/Union",
   "changelogUrl": "https://github.com/Appegy/Union/releases",
   "license": "MIT",
