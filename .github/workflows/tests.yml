@@ -17,10 +17,10 @@ jobs:
           dotnet-version: '9.0.x'
 
       - name: Restore dependencies
-        run: dotnet restore generator/Appegy.Union.Generator.slnx
+        run: dotnet restore Appegy.Union.Generator/Appegy.Union.Generator.slnx
 
       - name: Build solution
-        run: dotnet build generator/Appegy.Union.Generator.slnx --configuration Release --no-restore
+        run: dotnet build Appegy.Union.Generator/Appegy.Union.Generator.slnx --configuration Release --no-restore
 
       - name: Run tests
-        run: dotnet test generator/Appegy.Union.Generator.Tests/Appegy.Union.Generator.Tests.csproj --configuration Release --no-build --verbosity normal
+        run: dotnet test Appegy.Union.Generator/Appegy.Union.Generator.Tests/Appegy.Union.Generator.Tests.csproj --configuration Release --no-build --verbosity normal
