@@ -23,10 +23,10 @@ namespace Appegy.Union.Sample
 
             AddFolder(sb, "ExternalProjects", ExternalProjectsFolderGuid);
 
-            AddProjectToFolder(sb, "Appegy.Union.Generator", GeneratorProjectGuid, "..\\Appegy.Union.Generator~\\Appegy.Union.Generator\\Appegy.Union.Generator.csproj");
-            AddProjectToFolder(sb, "Appegy.Union.Generator.Diagnostic", GeneratorDiagnosticProjectGuid, "..\\Appegy.Union.Generator~\\Appegy.Union.Generator.Diagnostic\\Appegy.Union.Generator.Diagnostic.csproj");
-            AddProjectToFolder(sb, "Appegy.Union.Generator.Tests", GeneratorTestsProjectGuid, "..\\Appegy.Union.Generator~\\Appegy.Union.Generator.Tests\\Appegy.Union.Generator.Tests.csproj");
-            AddProjectToFolder(sb, "Appegy.Union.Generator.Shapes", GeneratorShapesProjectGuid, "..\\Appegy.Union.Generator~\\Appegy.Union.Generator.Shapes\\Appegy.Union.Generator.Shapes.csproj");
+            AddProjectToFolder(sb, "Appegy.Union.Generator", GeneratorProjectGuid, "..\\generator\\Appegy.Union.Generator\\Appegy.Union.Generator.csproj");
+            AddProjectToFolder(sb, "Appegy.Union.Generator.Diagnostic", GeneratorDiagnosticProjectGuid, "..\\generator\\Appegy.Union.Generator.Diagnostic\\Appegy.Union.Generator.Diagnostic.csproj");
+            AddProjectToFolder(sb, "Appegy.Union.Generator.Tests", GeneratorTestsProjectGuid, "..\\generator\\Appegy.Union.Generator.Tests\\Appegy.Union.Generator.Tests.csproj");
+            AddProjectToFolder(sb, "Appegy.Union.Generator.Shapes", GeneratorShapesProjectGuid, "..\\generator\\Appegy.Union.Generator.Shapes\\Appegy.Union.Generator.Shapes.csproj");
 
             AddProjectConfiguration(sb, GeneratorProjectGuid);
             AddProjectConfiguration(sb, GeneratorDiagnosticProjectGuid);

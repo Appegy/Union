@@ -21,7 +21,7 @@
             <_FilesToCopy Include="$(OutputPath)**\$(AssemblyName).dll"/>
             <_FilesToCopy Include="$(OutputPath)**\$(AssemblyName).pdb"/>
         </ItemGroup>
-        <Copy SourceFiles="@(_FilesToCopy)" DestinationFolder="$(OutputPath)..\..\..\..\..\Packages\com.appegy.union\Runtime"/>
+        <Copy SourceFiles="@(_FilesToCopy)" DestinationFolder="$(OutputPath)..\..\..\..\..\src\Runtime"/>
     </Target>
 
 </Project>
